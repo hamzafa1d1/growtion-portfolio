@@ -1,48 +1,21 @@
 "use client";
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
+import Image from "next/image";
 
-// PLACEHOLDER: Replace src with your actual testimonial screenshots
-// Drop them in public/testimonials/review-1.jpg through review-5.jpg
-const testimonials = [
-  {
-    id: 1,
-    src: "/testimonials/review-1.jpg",
-    name: "Client e-commerce",
-    result: "13,752 DT en une semaine",
-    platform: "WhatsApp",
-  },
-  {
-    id: 2,
-    src: "/testimonials/review-2.jpg",
-    name: "ccnverty.shop",
-    result: "643,761 DT en un mois",
-    platform: "Shopify",
-  },
-  {
-    id: 3,
-    src: "/testimonials/review-3.jpg",
-    name: "Client Facebook Ads",
-    result: "558 achats — 463.94 $US",
-    platform: "Facebook Ads",
-  },
-  {
-    id: 4,
-    src: "/testimonials/review-4.jpg",
-    name: "yassine_alouii",
-    result: "Agency la mieux en Tunisie",
-    platform: "Instagram",
-  },
-  {
-    id: 5,
-    src: "/testimonials/review-5.jpg",
-    name: "converty.shop",
-    result: "Plusieurs commandes le matin",
-    platform: "Converty",
-  },
+export interface TestimonialsProps {
+  reviewUrls?: (string | null)[];
+}
+
+const TESTIMONIAL_DATA = [
+  { name: "Client e-commerce", result: "13,752 DT en une semaine", platform: "WhatsApp" },
+  { name: "ccnverty.shop", result: "643,761 DT en un mois", platform: "Shopify" },
+  { name: "Client Facebook Ads", result: "558 achats — 463.94 $US", platform: "Facebook Ads" },
+  { name: "yassine_alouii", result: "Agency la mieux en Tunisie", platform: "Instagram" },
+  { name: "converty.shop", result: "Plusieurs commandes le matin", platform: "Converty" },
 ];
 
-export function Testimonials() {
+export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
   return (
     <section
       id="avis"
@@ -75,46 +48,50 @@ export function Testimonials() {
 
         {/* Testimonial cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-12">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.id}
-              initial={{ y: 30, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
-              whileHover={{ y: -6, scale: 1.02 }}
-              className="relative rounded-3xl overflow-hidden"
-              style={{
-                background: "rgba(20,17,50,0.9)",
-                border: "1px solid rgba(124,58,237,0.2)",
-                minHeight: "280px",
-              }}
-            >
-              {/* PLACEHOLDER: Your testimonial screenshot */}
-              <div
-                className="w-full h-full flex flex-col items-center justify-center gap-3 p-5"
+          {TESTIMONIAL_DATA.map((t, i) => {
+            const imageUrl = reviewUrls[i] ?? null;
+            return (
+              <motion.div
+                key={i}
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ y: -6, scale: 1.02 }}
+                className="relative rounded-3xl overflow-hidden"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(124,58,237,0.15), rgba(13,11,43,0.95))",
+                  background: "rgba(20,17,50,0.9)",
+                  border: "1px solid rgba(124,58,237,0.2)",
                   minHeight: "280px",
                 }}
               >
-                <Quote className="w-8 h-8 text-purple-500 opacity-60" />
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-black"
-                  style={{ background: "linear-gradient(135deg, #7C3AED, #9333EA)" }}
-                >
-                  {t.id}
-                </div>
-                <p className="text-white font-bold text-sm text-center">{t.name}</p>
-                <p className="text-yellow-400 text-xs font-bold text-center">{t.result}</p>
-                <p className="text-gray-500 text-xs">{t.platform}</p>
-                <p className="text-gray-600 text-xs text-center mt-1">
-                  📸 public/testimonials/<br />review-{t.id}.jpg
-                </p>
-              </div>
-            </motion.div>
-          ))}
+                {imageUrl ? (
+                  <div className="relative w-full" style={{ minHeight: "280px" }}>
+                    <Image src={imageUrl} alt={t.name} fill className="object-cover" sizes="300px" />
+                  </div>
+                ) : (
+                  <div
+                    className="w-full h-full flex flex-col items-center justify-center gap-3 p-5"
+                    style={{
+                      background: "linear-gradient(180deg, rgba(124,58,237,0.15), rgba(13,11,43,0.95))",
+                      minHeight: "280px",
+                    }}
+                  >
+                    <Quote className="w-8 h-8 text-purple-500 opacity-60" />
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-black"
+                      style={{ background: "linear-gradient(135deg, #7C3AED, #9333EA)" }}
+                    >
+                      {i + 1}
+                    </div>
+                    <p className="text-white font-bold text-sm text-center">{t.name}</p>
+                    <p className="text-yellow-400 text-xs font-bold text-center">{t.result}</p>
+                    <p className="text-gray-500 text-xs">{t.platform}</p>
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Social proof banner */}

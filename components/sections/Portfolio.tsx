@@ -2,35 +2,34 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Play, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 const tabs = ["Vidéos Pub", "Vidéos UGC", "Landing Pages"] as const;
 type Tab = (typeof tabs)[number];
 
-// PLACEHOLDER: Replace these with real thumbnails in public/portfolio/
-const videoPlaceholders = [
-  { id: 1, src: "/portfolio/video-1.jpg", hook: "CAP CUT هذا PRO" },
-  { id: 2, src: "/portfolio/video-2.jpg", hook: "ترجع للدار بلا طاقة" },
-  { id: 3, src: "/portfolio/video-3.jpg", hook: "كل تفاصيل تحضير روحك" },
-  { id: 4, src: "/portfolio/video-4.jpg", hook: "الحماس اختفى — المشكلة ليست أنت" },
+export interface PortfolioProps {
+  videoUrls?: (string | null)[];
+  ugcUrls?: (string | null)[];
+  landingUrls?: (string | null)[];
+}
+
+const VIDEO_HOOKS = [
+  "CAP CUT هذا PRO",
+  "ترجع للدار بلا طاقة",
+  "كل تفاصيل تحضير روحك",
+  "الحماس اختفى — المشكلة ليست أنت",
 ];
 
-const ugcPlaceholders = [
-  { id: 1, src: "/portfolio/ugc-1.jpg", hook: "Vidéo UGC 1" },
-  { id: 2, src: "/portfolio/ugc-2.jpg", hook: "Vidéo UGC 2" },
-  { id: 3, src: "/portfolio/ugc-3.jpg", hook: "Vidéo UGC 3" },
-  { id: 4, src: "/portfolio/ugc-4.jpg", hook: "Vidéo UGC 4" },
+const LANDING_TITLES = [
+  "Massage Gun",
+  "Sac Magnétique",
+  "Équipement Fitness",
+  "Table de Massage",
+  "Coussin Orthopédique",
+  "Appareil Sport",
 ];
 
-const landingPlaceholders = [
-  { id: 1, src: "/portfolio/landing-1.jpg", title: "Massage Gun" },
-  { id: 2, src: "/portfolio/landing-2.jpg", title: "Sac Magnétique" },
-  { id: 3, src: "/portfolio/landing-3.jpg", title: "Équipement Fitness" },
-  { id: 4, src: "/portfolio/landing-4.jpg", title: "Table de Massage" },
-  { id: 5, src: "/portfolio/landing-5.jpg", title: "Coussin Orthopédique" },
-  { id: 6, src: "/portfolio/landing-6.jpg", title: "Appareil Sport" },
-];
-
-function PhoneMockup({ src, label, index }: { src: string; label: string; index: number }) {
+function PhoneMockup({ imageUrl, label, index }: { imageUrl: string | null; label: string; index: number }) {
   return (
     <motion.div
       initial={{ y: 30, opacity: 0 }}
@@ -52,28 +51,28 @@ function PhoneMockup({ src, label, index }: { src: string; label: string; index:
           background: "rgba(20,17,50,0.9)",
         }}
       >
-        {/* PLACEHOLDER: Drop your video thumbnail/screenshot here */}
-        <div
-          className="w-full h-full flex flex-col items-center justify-center gap-2 p-3"
-          style={{ background: "linear-gradient(180deg, rgba(124,58,237,0.3), rgba(13,11,43,0.9))" }}
-        >
+        {imageUrl ? (
+          <Image src={imageUrl} alt={label} fill className="object-cover" sizes="160px" />
+        ) : (
           <div
-            className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ background: "rgba(124,58,237,0.5)", border: "2px solid rgba(255,255,255,0.3)" }}
+            className="w-full h-full flex flex-col items-center justify-center gap-2 p-3"
+            style={{ background: "linear-gradient(180deg, rgba(124,58,237,0.3), rgba(13,11,43,0.9))" }}
           >
-            <Play className="w-6 h-6 text-white ml-1" />
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(124,58,237,0.5)", border: "2px solid rgba(255,255,255,0.3)" }}
+            >
+              <Play className="w-6 h-6 text-white ml-1" />
+            </div>
+            <p className="text-white text-xs text-center font-bold leading-tight px-2">{label}</p>
           </div>
-          <p className="text-white text-xs text-center font-bold leading-tight px-2">{label}</p>
-          <p className="text-purple-400 text-xs text-center opacity-60">
-            📸 Remplacer avec<br />votre thumbnail
-          </p>
-        </div>
+        )}
       </div>
     </motion.div>
   );
 }
 
-function LandingPageMockup({ src, title, index }: { src: string; title: string; index: number }) {
+function LandingPageMockup({ imageUrl, title, index }: { imageUrl: string | null; title: string; index: number }) {
   return (
     <motion.div
       initial={{ y: 30, opacity: 0 }}
@@ -88,18 +87,17 @@ function LandingPageMockup({ src, title, index }: { src: string; title: string; 
         height: "280px",
       }}
     >
-      {/* PLACEHOLDER: Drop your landing page screenshot here (public/portfolio/landing-X.jpg) */}
-      <div
-        className="w-full h-full flex flex-col items-center justify-center gap-3"
-        style={{ background: "linear-gradient(180deg, rgba(74,0,224,0.3), rgba(13,11,43,0.95))" }}
-      >
-        <ExternalLink className="w-8 h-8 text-purple-400" />
-        <p className="text-white font-bold text-sm">{title}</p>
-        <p className="text-gray-500 text-xs text-center px-4">
-          📸 Remplacer avec votre screenshot<br />(public/portfolio/landing-{index + 1}.jpg)
-        </p>
-      </div>
-
+      {imageUrl ? (
+        <Image src={imageUrl} alt={title} fill className="object-cover" sizes="400px" />
+      ) : (
+        <div
+          className="w-full h-full flex flex-col items-center justify-center gap-3"
+          style={{ background: "linear-gradient(180deg, rgba(74,0,224,0.3), rgba(13,11,43,0.95))" }}
+        >
+          <ExternalLink className="w-8 h-8 text-purple-400" />
+          <p className="text-white font-bold text-sm">{title}</p>
+        </div>
+      )}
       {/* Hover overlay */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
@@ -111,7 +109,7 @@ function LandingPageMockup({ src, title, index }: { src: string; title: string; 
   );
 }
 
-export function Portfolio() {
+export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: PortfolioProps) {
   const [activeTab, setActiveTab] = useState<Tab>("Vidéos Pub");
 
   return (
@@ -181,31 +179,36 @@ export function Portfolio() {
         >
           {activeTab === "Vidéos Pub" && (
             <div className="flex flex-wrap justify-center gap-6">
-              {videoPlaceholders.map((v, i) => (
-                <PhoneMockup key={v.id} src={v.src} label={v.hook} index={i} />
+              {VIDEO_HOOKS.map((hook, i) => (
+                <PhoneMockup key={i} imageUrl={videoUrls[i] ?? null} label={hook} index={i} />
               ))}
             </div>
           )}
           {activeTab === "Vidéos UGC" && (
             <div className="flex flex-wrap justify-center gap-6">
-              {ugcPlaceholders.map((v, i) => (
-                <PhoneMockup key={v.id} src={v.src} label={v.hook} index={i} />
+              {["Vidéo UGC 1", "Vidéo UGC 2", "Vidéo UGC 3", "Vidéo UGC 4"].map((label, i) => (
+                <PhoneMockup key={i} imageUrl={ugcUrls[i] ?? null} label={label} index={i} />
               ))}
             </div>
           )}
           {activeTab === "Landing Pages" && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {landingPlaceholders.map((l, i) => (
-                <LandingPageMockup key={l.id} src={l.src} title={l.title} index={i} />
+              {LANDING_TITLES.map((title, i) => (
+                <LandingPageMockup key={i} imageUrl={landingUrls[i] ?? null} title={title} index={i} />
               ))}
             </div>
           )}
         </motion.div>
 
-        {/* Note */}
-        <p className="text-center text-gray-600 text-xs mt-8">
-          💡 Ajoutez vos images dans <code className="text-purple-400">public/portfolio/</code>
-        </p>
+        {/* Note — only shown when no images uploaded yet */}
+        {videoUrls.every((u) => !u) && ugcUrls.every((u) => !u) && landingUrls.every((u) => !u) && (
+          <p className="text-center text-gray-600 text-xs mt-8">
+            💡 Uploadez vos images depuis{" "}
+            <a href="/admin" className="text-purple-400 hover:text-purple-300 underline">
+              l&apos;espace admin
+            </a>
+          </p>
+        )}
       </div>
     </section>
   );

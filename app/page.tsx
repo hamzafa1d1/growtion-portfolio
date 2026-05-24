@@ -7,8 +7,13 @@ import { Portfolio } from "@/components/sections/Portfolio";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Pricing } from "@/components/sections/Pricing";
 import { CTA } from "@/components/sections/CTA";
+import { getAssets } from "@/lib/assets";
 
-export default function Home() {
+export const revalidate = 60; // ISR: revalidate every 60 seconds
+
+export default async function Home() {
+  const assets = await getAssets();
+
   return (
     <>
       <Navbar />
@@ -17,8 +22,12 @@ export default function Home() {
         <Hero />
         <Services />
         <Results />
-        <Portfolio />
-        <Testimonials />
+        <Portfolio
+          videoUrls={assets["portfolio-video"]}
+          ugcUrls={assets["portfolio-ugc"]}
+          landingUrls={assets["portfolio-landing"]}
+        />
+        <Testimonials reviewUrls={assets["testimonials-review"]} />
         <Pricing />
         <CTA />
       </main>

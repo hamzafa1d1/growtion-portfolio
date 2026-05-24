@@ -22,6 +22,10 @@ const VIDEO_HOOKS = [
 ];
 const LANDING_TITLES = ["Massage Gun", "Sac Magnétique", "Équipement Fitness", "Table de Massage", "Coussin Orthopédique", "Appareil Sport"];
 
+function isVideo(url: string) {
+  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
+}
+
 function PhoneMockup({ imageUrl, label, index }: { imageUrl: string | null; label: string; index: number }) {
   return (
     <motion.div
@@ -37,7 +41,18 @@ function PhoneMockup({ imageUrl, label, index }: { imageUrl: string | null; labe
           boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
         }}>
         {imageUrl ? (
-          <Image src={imageUrl} alt={label} fill className="object-cover" sizes="150px" />
+          isVideo(imageUrl) ? (
+            <video
+              src={imageUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            <Image src={imageUrl} alt={label} fill className="object-cover" sizes="150px" />
+          )
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-3"
             style={{ background: "linear-gradient(160deg, #f5f3ff, #ede9fe)" }}>
@@ -133,12 +148,7 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
           )}
         </motion.div>
 
-        {videoUrls.every((u) => !u) && ugcUrls.every((u) => !u) && landingUrls.every((u) => !u) && (
-          <p className="text-center text-gray-400 text-xs mt-8">
-            💡 Uploadez vos images depuis{" "}
-            <a href="/admin" className="text-purple-600 hover:text-purple-700 underline">l&apos;espace admin</a>
-          </p>
-        )}
+
       </div>
     </section>
   );

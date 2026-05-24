@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { put, del, list } from "@vercel/blob";
 import { requireAuth } from "@/lib/auth";
 import { assetKey, AssetCategory } from "@/lib/assets";
 
@@ -37,9 +37,22 @@ export async function POST(request: NextRequest) {
   const ext = file.name.split(".").pop() ?? "jpg";
   const key = assetKey(category, index, ext);
 
+  // Delete any existing blob for this slot (any extension) before uploading
+  const token = process.env.BLOB_READ_WRITE_TOKEN!;
+  const { blobs: existing } = await list({ token });
+  const toDelete = existing.filter((b) => {
+    if (!b.pathname.startsWith(category + "-")) return false;
+    const rest = b.pathname.replace(category + "-", "");
+    const num = parseInt(rest.split(".")[0], 10);
+    return num === index;
+  });
+  if (toDelete.length > 0) {
+    await del(toDelete.map((b) => b.url), { token });
+  }
+
   const blob = await put(key, file, {
     access: "public",
-    token: process.env.BLOB_READ_WRITE_TOKEN,
+    token,
   });
 
   return NextResponse.json({ url: blob.url, key });

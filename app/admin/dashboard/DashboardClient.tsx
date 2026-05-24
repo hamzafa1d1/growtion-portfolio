@@ -19,12 +19,23 @@ const SECTIONS: {
   count: number;
   hint: string;
 }[] = [
-  { category: "results-screenshot", label: "Résultats (Campagnes)", icon: "📊", count: 6, hint: "Screenshots de vos campagnes Facebook Ads / résultats (JPG, PNG, WebP)" },
-  { category: "portfolio-video", label: "Vidéos Publicitaires", icon: "📹", count: 4, hint: "Thumbnails des vidéos pub (JPG, PNG, WebP)" },
-  { category: "portfolio-ugc", label: "Vidéos UGC", icon: "🎯", count: 4, hint: "Thumbnails des vidéos UGC (JPG, PNG, WebP)" },
-  { category: "portfolio-landing", label: "Landing Pages", icon: "🖥️", count: 6, hint: "Screenshots des landing pages (JPG, PNG, WebP)" },
-  { category: "testimonials-review", label: "Avis Clients", icon: "💬", count: 5, hint: "Screenshots des avis WhatsApp/Insta (JPG, PNG)" },
+  { category: "results-screenshot", label: "Résultats (Campagnes)", icon: "📊", count: 6, hint: "Screenshots de vos campagnes (JPG, PNG, WebP — max 20 MB)" },
+  { category: "portfolio-video", label: "Vidéos Publicitaires", icon: "📹", count: 4, hint: "Fichiers vidéo MP4 de vos pubs (MP4 — max 20 MB)" },
+  { category: "portfolio-ugc", label: "Vidéos UGC", icon: "🎯", count: 4, hint: "Fichiers vidéo MP4 UGC (MP4 — max 20 MB)" },
+  { category: "portfolio-landing", label: "Landing Pages", icon: "🖥️", count: 6, hint: "Screenshots des landing pages (JPG, PNG, WebP — max 20 MB)" },
+  { category: "testimonials-review", label: "Avis Clients", icon: "💬", count: 5, hint: "Screenshots des avis WhatsApp/Insta (JPG, PNG — max 20 MB)" },
 ];
+
+function isVideo(url: string) {
+  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
+}
+
+function acceptForCategory(category: AssetCategory) {
+  if (category === "portfolio-video" || category === "portfolio-ugc") {
+    return "video/mp4,video/webm";
+  }
+  return "image/jpeg,image/png,image/webp,image/gif";
+}
 
 export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) {
   const router = useRouter();
@@ -219,15 +230,26 @@ export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) 
                           }
                         }}
                       >
-                        {/* Current image */}
+                        {/* Current media */}
                         {currentUrl && status.state !== "uploading" && (
-                          <Image
-                            src={currentUrl}
-                            alt={`${section.label} ${index}`}
-                            fill
-                            className="object-cover"
-                            sizes="200px"
-                          />
+                          isVideo(currentUrl) ? (
+                            <video
+                              src={currentUrl}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              className="absolute inset-0 w-full h-full object-cover"
+                            />
+                          ) : (
+                            <Image
+                              src={currentUrl}
+                              alt={`${section.label} ${index}`}
+                              fill
+                              className="object-cover"
+                              sizes="200px"
+                            />
+                          )
                         )}
 
                         {/* Overlay states */}
@@ -295,7 +317,7 @@ export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) 
                       <input
                         ref={(el) => { fileInputRefs.current[key] = el; }}
                         type="file"
-                        accept="image/jpeg,image/png,image/webp,image/gif"
+                        accept={acceptForCategory(section.category)}
                         className="hidden"
                         onChange={onFileChange(section.category, index)}
                       />
@@ -322,7 +344,7 @@ export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) 
               <li>• Cliquez sur un slot vide pour uploader une nouvelle image (max 20 MB)</li>
               <li>• Cliquez sur une image existante pour la remplacer</li>
               <li>• Les images apparaissent sur le site en moins d&apos;une minute</li>
-              <li>• Formats acceptés: JPG, PNG, WebP, GIF</li>
+              <li>• Formats acceptés: JPG, PNG, WebP (images) — MP4 (vidéos pub / UGC)</li>
             </ul>
           </div>
         </div>

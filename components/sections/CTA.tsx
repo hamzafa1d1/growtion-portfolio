@@ -16,13 +16,6 @@ function InstagramIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-function FacebookIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  );
-}
 
 export function CTA() {
   return (
@@ -79,16 +72,10 @@ export function CTA() {
           viewport={{ once: true }} transition={{ delay: 0.35, duration: 0.5 }}
           className="flex gap-6 items-center"
         >
-          <a href="https://instagram.com/growtion7" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.instagram.com/growtion_creatives/" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors">
             <InstagramIcon className="w-5 h-5" />
-            <span className="text-sm font-semibold">growtion7</span>
-          </a>
-          <div className="w-1 h-1 rounded-full bg-gray-300" />
-          <a href="https://facebook.com/growtion" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-colors">
-            <FacebookIcon className="w-5 h-5" />
-            <span className="text-sm font-semibold">growtion</span>
+            <span className="text-sm font-semibold">growtion_creatives</span>
           </a>
         </motion.div>
 

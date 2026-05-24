@@ -16,13 +16,6 @@ function InstagramIcon() {
     </svg>
   );
 }
-function FacebookIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  );
-}
 function WhatsAppIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -47,18 +40,11 @@ const socials = [
     hover: "hover:text-green-600",
   },
   {
-    href: "https://instagram.com/growtion7",
-    label: "growtion7",
+    href: "https://www.instagram.com/growtion_creatives/",
+    label: "growtion_creatives",
     icon: <InstagramIcon />,
     bg: "linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)",
     hover: "hover:text-pink-600",
-  },
-  {
-    href: "https://facebook.com/growtion",
-    label: "growtion",
-    icon: <FacebookIcon />,
-    bg: "#1877f2",
-    hover: "hover:text-blue-600",
   },
 ];
 

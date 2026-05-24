@@ -19,7 +19,7 @@ const plans = [
   },
   {
     category: "Vidéos UGC",
-    featured: true,
+    featured: false,
     packages: [
       { label: "1 vidéo UGC", price: 199 },
       { label: "2 vidéos UGC", price: 350 },
@@ -33,6 +33,17 @@ const plans = [
     packages: [{ label: "1 page complète", price: 49 }],
     features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
     msg: "Bonjour! Je suis intéressé(e) par votre service Landing Page.",
+  },
+  {
+    category: "Filmage",
+    featured: false,
+    packages: [
+      { label: "1 vidéo tournée", price: 350 },
+      { label: "3 vidéos tournées", price: 900 },
+      { label: "5 vidéos tournées", price: 1250 },
+    ],
+    features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
+    msg: "Bonjour! Je suis intéressé(e) par votre service Filmage.",
   },
 ];
 
@@ -56,7 +67,7 @@ export function Pricing() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.category}
@@ -65,21 +76,14 @@ export function Pricing() {
               whileHover={{ y: -6, transition: { duration: 0.2, ease: "easeOut" } }}
               className="relative rounded-3xl overflow-hidden flex flex-col"
               style={{
-                background: plan.featured ? "white" : "rgba(255,255,255,0.1)",
-                border: plan.featured ? "2px solid white" : "1px solid rgba(255,255,255,0.2)",
-                boxShadow: plan.featured ? "0 16px 48px rgba(0,0,0,0.25)" : "none",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
               }}
             >
-              {plan.featured && (
-                <div className="bg-purple-600 text-white text-center py-2 text-xs font-black tracking-wide">
-                  ⭐ LE PLUS POPULAIRE
-                </div>
-              )}
-
               {/* Category header */}
               <div className="px-7 pt-7 pb-5"
-                style={{ borderBottom: plan.featured ? "1px solid #ede9fe" : "1px solid rgba(255,255,255,0.15)" }}>
-                <h3 className={`text-xl font-black ${plan.featured ? "text-gray-900" : "text-white"}`}>
+                style={{ borderBottom: "1px solid rgba(255,255,255,0.15)" }}>
+                <h3 className="text-xl font-black text-white">
                   {plan.category}
                 </h3>
               </div>
@@ -88,11 +92,11 @@ export function Pricing() {
               <div className="px-7 py-5 flex flex-col gap-3 flex-1">
                 {plan.packages.map((pkg) => (
                   <div key={pkg.label} className="rounded-2xl p-4 flex items-baseline justify-between gap-3"
-                    style={{ background: plan.featured ? "#f5f3ff" : "rgba(255,255,255,0.1)" }}>
-                    <p className={`text-sm leading-tight flex-1 ${plan.featured ? "text-gray-700" : "text-white/90"}`}>{pkg.label}</p>
+                    style={{ background: "rgba(255,255,255,0.1)" }}>
+                    <p className="text-sm leading-tight flex-1 text-white/90">{pkg.label}</p>
                     <div className="flex items-baseline gap-0.5 flex-shrink-0">
-                      <span className={`text-3xl font-black ${plan.featured ? "text-purple-600" : "text-white"}`}>{pkg.price}</span>
-                      <span className={`text-sm ${plan.featured ? "text-gray-400" : "text-white/50"}`}>DT</span>
+                      <span className="text-3xl font-black text-white">{pkg.price}</span>
+                      <span className="text-sm text-white/50">DT</span>
                     </div>
                   </div>
                 ))}
@@ -100,8 +104,8 @@ export function Pricing() {
                 <ul className="flex flex-col gap-2 mt-2">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2 text-sm">
-                      <Check className={`w-4 h-4 flex-shrink-0 ${plan.featured ? "text-purple-600" : "text-purple-300"}`} />
-                      <span className={plan.featured ? "text-gray-600" : "text-white/80"}>{f}</span>
+                      <Check className="w-4 h-4 flex-shrink-0 text-purple-300" />
+                      <span className="text-white/80">{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -112,9 +116,7 @@ export function Pricing() {
                   whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                   transition={{ duration: 0.15, ease: "easeOut" }}
                   className="flex items-center justify-center gap-2 py-3 rounded-2xl font-black text-sm mt-auto transition-all"
-                  style={plan.featured
-                    ? { background: "linear-gradient(135deg, #7c3aed, #6d28d9)", color: "white", boxShadow: "0 4px 16px rgba(109,40,217,0.3)" }
-                    : { background: "white", color: "#7c3aed" }}
+                  style={{ background: "white", color: "#7c3aed" }}
                 >
                   <MessageCircle className="w-4 h-4" />
                   Commander sur WhatsApp

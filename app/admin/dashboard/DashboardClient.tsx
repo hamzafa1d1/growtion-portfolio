@@ -19,6 +19,7 @@ const SECTIONS: {
   count: number;
   hint: string;
 }[] = [
+  { category: "results-screenshot", label: "Résultats (Campagnes)", icon: "📊", count: 6, hint: "Screenshots de vos campagnes Facebook Ads / résultats (JPG, PNG, WebP)" },
   { category: "portfolio-video", label: "Vidéos Publicitaires", icon: "📹", count: 4, hint: "Thumbnails des vidéos pub (JPG, PNG, WebP)" },
   { category: "portfolio-ugc", label: "Vidéos UGC", icon: "🎯", count: 4, hint: "Thumbnails des vidéos UGC (JPG, PNG, WebP)" },
   { category: "portfolio-landing", label: "Landing Pages", icon: "🖥️", count: 6, hint: "Screenshots des landing pages (JPG, PNG, WebP)" },

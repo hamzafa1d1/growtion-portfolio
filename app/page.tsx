@@ -21,7 +21,7 @@ export default async function Home() {
       <main>
         <Hero />
         <Services />
-        <Results />
+        <Results screenshotUrls={assets["results-screenshot"]} />
         <Portfolio
           videoUrls={assets["portfolio-video"]}
           ugcUrls={assets["portfolio-ugc"]}

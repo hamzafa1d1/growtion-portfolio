@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Play, Zap, Layout, ArrowRight, Check } from "lucide-react";
+import { Play, Zap, Layout, Clapperboard, ArrowRight, Check } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const WHATSAPP_NUMBER = "21656614879";
@@ -9,11 +9,10 @@ const services = [
   {
     icon: <Play className="w-8 h-8" />,
     title: "Vidéos Publicitaires",
-    description: "Des vidéos ads percutantes qui capturent l'attention en moins de 3 secondes. Conçues pour convertir sur Facebook, TikTok et Instagram.",
+    description: "Des vidéos ads percutantes qui capturent l’attention en moins de 3 secondes. Conçues pour convertir sur Facebook, TikTok et Instagram.",
     features: ["Hook accrocheur", "Script optimisé", "Montage pro", "Version multiformat"],
     accentColor: "#7c3aed",
     msg: "Bonjour! Je suis intéressé(e) par vos Vidéos Publicitaires.",
-    featured: false,
   },
   {
     icon: <Zap className="w-8 h-8" />,
@@ -22,16 +21,22 @@ const services = [
     features: ["Authenticité 100%", "Casting créateurs", "Plusieurs angles", "Haute conversion"],
     accentColor: "#6d28d9",
     msg: "Bonjour! Je suis intéressé(e) par vos Vidéos UGC.",
-    featured: true,
   },
   {
     icon: <Layout className="w-8 h-8" />,
     title: "Landing Pages",
-    description: "Des pages de vente optimisées qui guident le visiteur vers l'achat. Design persuasif, copywriting émotionnel.",
+    description: "Des pages de vente optimisées qui guident le visiteur vers l’achat. Design persuasif, copywriting émotionnel.",
     features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
     accentColor: "#7c3aed",
     msg: "Bonjour! Je suis intéressé(e) par votre service Landing Page.",
-    featured: false,
+  },
+  {
+    icon: <Clapperboard className="w-8 h-8" />,
+    title: "Filmage",
+    description: "Tournage professionnel on-location ou en studio. Des productions de haute qualité qui donnent une image premium à votre marque.",
+    features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
+    accentColor: "#5b21b6",
+    msg: "Bonjour! Je suis intéressé(e) par votre service Filmage.",
   },
 ];
 
@@ -55,7 +60,7 @@ export function Services() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s, i) => (
             <motion.div
               key={s.title}
@@ -64,18 +69,10 @@ export function Services() {
               whileHover={{ y: -6, transition: { duration: 0.2, ease: "easeOut" } }}
               className="relative bg-white rounded-3xl p-8 flex flex-col gap-5"
               style={{
-                border: s.featured ? `2px solid #7c3aed` : "1px solid #ede9fe",
-                boxShadow: s.featured
-                  ? "0 12px 40px rgba(109,40,217,0.18)"
-                  : "0 2px 12px rgba(109,40,217,0.07)",
+                border: "1px solid #ede9fe",
+                boxShadow: "0 2px 12px rgba(109,40,217,0.07)",
               }}
             >
-              {s.featured && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black bg-purple-600 text-white whitespace-nowrap">
-                  ⭐ LE PLUS POPULAIRE
-                </div>
-              )}
-
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white"
                 style={{ background: `linear-gradient(135deg, ${s.accentColor}, #a855f7)` }}>
                 {s.icon}

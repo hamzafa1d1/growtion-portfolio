@@ -147,8 +147,6 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
             </div>
           )}
         </motion.div>
-
-
       </div>
     </section>
   );

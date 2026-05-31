@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
+import { SectorsBand } from "@/components/ui/SectorsBand";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
 import { Results } from "@/components/sections/Results";
@@ -21,6 +22,7 @@ export default async function Home() {
       <FloatingWhatsApp />
       <main>
         <Hero />
+        <SectorsBand />
         <Services />
         <Results screenshotUrls={assets["results-screenshot"]} />
         <Portfolio

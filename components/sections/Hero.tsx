@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { MessageCircle, Play, Zap, Layout, ArrowRight } from "lucide-react";
+import { MessageCircle, Play, Zap, Layout, ArrowRight, ChevronDown } from "lucide-react";
 
 const WHATSAPP_NUMBER = "21656614879";
 const WA_MSG = encodeURIComponent("Bonjour Growtion! Je suis intéressé(e) par vos services créatifs.");
@@ -26,9 +26,9 @@ function WhatsAppIcon() {
 }
 
 const services = [
-  { icon: <Play className="w-6 h-6 text-white" />, label: "VIDÉOS PUB", tag: "Publicité" },
-  { icon: <Zap className="w-6 h-6 text-white" />,  label: "UGC", tag: "Influence" },
-  { icon: <Layout className="w-6 h-6 text-white" />, label: "LANDING PAGE", tag: "Conversion" },
+  { icon: <Play className="w-6 h-6 text-white" />,   label: "VIDÉOS PUB",  tag: "Publicité"  },
+  { icon: <Zap className="w-6 h-6 text-white" />,    label: "UGC",         tag: "Influence"  },
+  { icon: <Layout className="w-6 h-6 text-white" />, label: "LANDING PAGE",tag: "Conversion" },
 ];
 
 const socials = [
@@ -37,26 +37,43 @@ const socials = [
     label: "+216 56 614 879",
     icon: <WhatsAppIcon />,
     bg: "#25D366",
-    hover: "hover:text-green-600",
   },
   {
     href: "https://www.instagram.com/growtion_creatives/",
     label: "growtion_creatives",
     icon: <InstagramIcon />,
     bg: "linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)",
-    hover: "hover:text-pink-600",
   },
 ];
 
 export function Hero() {
   return (
     <section id="hero" className="section-white relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Background accent */}
+
+      {/* ── Animated background blobs ── */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-2/3 h-full"
-          style={{ background: "linear-gradient(130deg, transparent 50%, #f5f3ff 100%)" }} />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl opacity-20"
-          style={{ background: "#a855f6" }} />
+        <div
+          className="absolute top-0 right-0 w-2/3 h-full"
+          style={{ background: "linear-gradient(130deg, transparent 50%, #f5f3ff 100%)" }}
+        />
+        <motion.div
+          animate={{ scale: [1, 1.35, 1], opacity: [0.15, 0.28, 0.15] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-10 -left-10 w-96 h-96 rounded-full blur-3xl"
+          style={{ background: "#a855f6" }}
+        />
+        <motion.div
+          animate={{ scale: [1.1, 1, 1.1], x: [0, 40, 0], opacity: [0.06, 0.14, 0.06] }}
+          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+          className="absolute top-1/4 -right-20 w-[520px] h-[520px] rounded-full blur-3xl"
+          style={{ background: "#7c3aed" }}
+        />
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute top-10 left-1/3 w-64 h-64 rounded-full blur-3xl"
+          style={{ background: "#c4b5fd" }}
+        />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 w-full grid md:grid-cols-[1fr_1.1fr] gap-16 items-center py-20">
@@ -69,7 +86,12 @@ export function Hero() {
           className="flex flex-col gap-6"
         >
           {/* Logo + badge */}
-          <div className="flex items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: EASE }}
+            className="flex items-center gap-3"
+          >
             <div className="animate-float">
               <Image src="/logo.svg" alt="Growtion" width={52} height={52} />
             </div>
@@ -80,180 +102,250 @@ export function Hero() {
                 <span className="text-green-600 text-xs font-bold">Disponible · Tunisie</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Service cards — staggered Masonry layout */}
+          {/* Service cards — masonry layout with float */}
           <div className="grid grid-cols-[1.3fr_1fr] gap-3">
-            {/* Tall left card */}
+
+            {/* Tall left card — outer: entrance + grid, inner: float + hover */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              className="row-span-2"
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.18, duration: 0.65, ease: EASE }}
-              whileHover={{ y: -8, rotate: -1, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="row-span-2 rounded-3xl p-5 flex flex-col justify-between"
-              style={{
-                background: "linear-gradient(160deg, #8b5cf6 0%, #6d28d9 100%)",
-                minHeight: 280,
-                boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
-                rotate: "-1.5deg",
-              }}
             >
-              <div className="w-11 h-11 rounded-2xl flex items-center justify-center"
-                style={{ background: "rgba(255,255,255,0.2)" }}>
-                {services[0].icon}
-              </div>
-              <div>
-                <p className="text-purple-200 text-xs font-bold mb-1">{services[0].tag}</p>
-                <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "Arial Black, sans-serif" }}>
-                  {services[0].label}
-                </p>
-              </div>
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1.3 }}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: "0 32px 70px rgba(109,40,217,0.55)",
+                  transition: { type: "spring", stiffness: 280, damping: 18 },
+                }}
+                className="rounded-3xl p-5 flex flex-col justify-between"
+                style={{
+                  background: "linear-gradient(160deg, #8b5cf6 0%, #6d28d9 100%)",
+                  minHeight: 280,
+                  boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
+                  rotate: "-1.5deg",
+                }}
+              >
+                <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                  {services[0].icon}
+                </div>
+                <div>
+                  <p className="text-purple-200 text-xs font-bold mb-1">{services[0].tag}</p>
+                  <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "Arial Black, sans-serif" }}>
+                    {services[0].label}
+                  </p>
+                </div>
+              </motion.div>
             </motion.div>
 
             {/* Top-right card */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28, duration: 0.65, ease: EASE }}
-              whileHover={{ y: -6, rotate: 1, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="rounded-3xl p-5 flex flex-col justify-between"
-              style={{
-                background: "linear-gradient(160deg, #7c3aed 0%, #5b21b6 100%)",
-                minHeight: 132,
-                boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
-                rotate: "2deg",
-              }}
+              transition={{ delay: 0.3, duration: 0.65, ease: EASE }}
             >
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: "rgba(255,255,255,0.2)" }}>
-                {services[1].icon}
-              </div>
-              <div>
-                <p className="text-purple-200 text-xs font-bold mb-0.5">{services[1].tag}</p>
-                <p className="text-white font-black text-base leading-tight">{services[1].label}</p>
-              </div>
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.7 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 24px 55px rgba(109,40,217,0.45)",
+                  transition: { type: "spring", stiffness: 280, damping: 18 },
+                }}
+                className="rounded-3xl p-5 flex flex-col justify-between"
+                style={{
+                  background: "linear-gradient(160deg, #7c3aed 0%, #5b21b6 100%)",
+                  minHeight: 132,
+                  boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
+                  rotate: "2deg",
+                }}
+              >
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                  {services[1].icon}
+                </div>
+                <div>
+                  <p className="text-purple-200 text-xs font-bold mb-0.5">{services[1].tag}</p>
+                  <p className="text-white font-black text-base leading-tight">{services[1].label}</p>
+                </div>
+              </motion.div>
             </motion.div>
 
             {/* Bottom-right card */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.38, duration: 0.65, ease: EASE }}
-              whileHover={{ y: -6, rotate: 1, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="rounded-3xl p-5 flex flex-col justify-between"
-              style={{
-                background: "linear-gradient(160deg, #a855f6 0%, #7c3aed 100%)",
-                minHeight: 132,
-                boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
-                rotate: "1deg",
-              }}
+              transition={{ delay: 0.42, duration: 0.65, ease: EASE }}
             >
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: "rgba(255,255,255,0.2)" }}>
-                {services[2].icon}
-              </div>
-              <div>
-                <p className="text-purple-200 text-xs font-bold mb-0.5">{services[2].tag}</p>
-                <p className="text-white font-black text-base leading-tight">{services[2].label}</p>
-              </div>
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2.1 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 24px 55px rgba(168,85,246,0.45)",
+                  transition: { type: "spring", stiffness: 280, damping: 18 },
+                }}
+                className="rounded-3xl p-5 flex flex-col justify-between"
+                style={{
+                  background: "linear-gradient(160deg, #a855f6 0%, #7c3aed 100%)",
+                  minHeight: 132,
+                  boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
+                  rotate: "1deg",
+                }}
+              >
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                  {services[2].icon}
+                </div>
+                <div>
+                  <p className="text-purple-200 text-xs font-bold mb-0.5">{services[2].tag}</p>
+                  <p className="text-white font-black text-base leading-tight">{services[2].label}</p>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
 
           {/* Trust strip */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5, ease: EASE }}
+            transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
             className="flex items-center gap-4 px-4 py-3 rounded-2xl"
             style={{ background: "#f5f3ff", border: "1px solid #ede9fe" }}
           >
-            <div className="text-center">
-              <p className="text-purple-700 font-black text-lg leading-none">200+</p>
-              <p className="text-gray-400 text-xs mt-0.5">Clients</p>
-            </div>
-            <div className="w-px h-8 bg-purple-200" />
-            <div className="text-center">
-              <p className="text-purple-700 font-black text-lg leading-none">1000+</p>
-              <p className="text-gray-400 text-xs mt-0.5">Créations</p>
-            </div>
-            <div className="w-px h-8 bg-purple-200" />
-            <div className="text-center">
-              <p className="text-purple-700 font-black text-lg leading-none">44x</p>
-              <p className="text-gray-400 text-xs mt-0.5">ROAS record</p>
-            </div>
+            {[
+              { value: "200+",  label: "Clients"     },
+              { value: "1000+", label: "Créations"   },
+              { value: "44x",   label: "ROAS record" },
+            ].map((stat, i) => (
+              <div key={stat.label} className="flex items-center gap-4">
+                {i > 0 && <div className="w-px h-8 bg-purple-200" />}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.65 + i * 0.1, duration: 0.4, type: "spring", stiffness: 300 }}
+                  className="text-center"
+                >
+                  <p className="text-purple-700 font-black text-lg leading-none">{stat.value}</p>
+                  <p className="text-gray-400 text-xs mt-0.5">{stat.label}</p>
+                </motion.div>
+              </div>
+            ))}
           </motion.div>
         </motion.div>
 
         {/* ── RIGHT: headline + CTA ── */}
-        <motion.div
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
-          className="flex flex-col gap-8"
-        >
-          {/* Headline */}
-          <div>
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
+        <div className="flex flex-col gap-8">
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.5, ease: EASE }}
+            className="text-purple-500 font-bold text-sm tracking-[0.2em] uppercase"
+          >
+            Sell Smart · Grow Faster
+          </motion.p>
+
+          {/* Headline — per-line stagger */}
+          <h1
+            className="font-black leading-[1.08] text-gray-900"
+            style={{ fontFamily: "Arial Black, Impact, sans-serif", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25, duration: 0.5, ease: EASE }}
-              className="text-purple-500 font-bold text-sm tracking-[0.2em] uppercase mb-4"
+              transition={{ delay: 0.32, duration: 0.6, ease: EASE }}
+              className="block"
             >
-              Sell Smart · Grow Faster
-            </motion.p>
-            <h1 className="font-black leading-[1.08] text-gray-900"
-              style={{ fontFamily: "Arial Black, Impact, sans-serif", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}>
               DES CRÉATIVES QUI{" "}
               <span className="gradient-text">TRANSFORMENT</span>
-              <br />LE SCROLL EN{" "}
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.48, duration: 0.6, ease: EASE }}
+              className="block"
+            >
+              LE SCROLL EN{" "}
               <span style={{ color: "#7c3aed" }}>ACHAT</span>
-            </h1>
-            <p className="text-gray-500 text-base mt-5 leading-relaxed max-w-md">
-              Vidéos publicitaires, UGC et landing pages qui convertissent — livrées vite, conçues pour scaler.
-            </p>
-          </div>
+            </motion.span>
+          </h1>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.58, duration: 0.5, ease: EASE }}
+            className="text-gray-500 text-base leading-relaxed max-w-md"
+          >
+            Vidéos publicitaires, UGC et landing pages qui convertissent — livrées vite, conçues pour scaler.
+          </motion.p>
 
           {/* Primary CTA */}
           <motion.a
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WA_MSG}`}
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5, ease: EASE }}
+            transition={{ delay: 0.68, duration: 0.5, ease: EASE }}
             whileHover={{ scale: 1.03, y: -3 }}
             whileTap={{ scale: 0.97 }}
-            className="flex items-center gap-3 text-white font-black text-xl px-9 py-5 rounded-2xl self-start animate-pulse-purple"
+            className="group flex items-center gap-3 text-white font-black text-xl px-9 py-5 rounded-2xl self-start relative overflow-hidden animate-pulse-purple"
             style={{
               background: "linear-gradient(135deg, #7c3aed, #6d28d9)",
               boxShadow: "0 8px 28px rgba(109,40,217,0.35)",
             }}
           >
-            <MessageCircle className="w-6 h-6" />
-            BOOSTER MES VENTES
-            <ArrowRight className="w-5 h-5" />
+            {/* Shimmer sweep on hover */}
+            <span
+              className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }}
+            />
+            <MessageCircle className="w-6 h-6 relative z-10" />
+            <span className="relative z-10">BOOSTER MES VENTES</span>
+            {/* Bouncing arrow */}
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </motion.span>
           </motion.a>
 
           {/* Divider */}
-          <div className="flex items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.78, duration: 0.4 }}
+            className="flex items-center gap-4"
+          >
             <div className="flex-1 h-px bg-purple-100" />
             <span className="text-gray-300 text-xs font-semibold">nous suivre</span>
             <div className="flex-1 h-px bg-purple-100" />
-          </div>
+          </motion.div>
 
-          {/* Social links — compact single row */}
+          {/* Social links */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.5, ease: EASE }}
+            transition={{ delay: 0.85, duration: 0.5, ease: EASE }}
             className="flex flex-wrap gap-3"
           >
             {socials.map((s) => (
-              <a
+              <motion.a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold text-gray-700 ${s.hover} transition-all hover:shadow-md`}
+                whileHover={{ scale: 1.05, y: -3, boxShadow: "0 10px 28px rgba(109,40,217,0.16)" }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-bold text-gray-700"
                 style={{ background: "#f5f3ff", border: "1px solid #ede9fe" }}
               >
                 <span
@@ -263,11 +355,26 @@ export function Hero() {
                   {s.icon}
                 </span>
                 {s.label}
-              </a>
+              </motion.a>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4, duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-5 h-5 text-purple-300" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

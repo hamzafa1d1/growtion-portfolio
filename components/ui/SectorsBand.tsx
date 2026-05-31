@@ -21,7 +21,7 @@ const SECTORS: { label: string; Icon: LucideIcon }[] = [
 const ROW_A = [...SECTORS, ...SECTORS];
 const ROW_B = [...[...SECTORS].reverse(), ...[...SECTORS].reverse()];
 
-const BG = "#fafaf9";
+const BG_EDGE = "#fafaf9";
 
 function Pill({ label, Icon }: { label: string; Icon: LucideIcon }) {
   return (
@@ -32,9 +32,9 @@ function Pill({ label, Icon }: { label: string; Icon: LucideIcon }) {
       style={{
         padding: "9px 20px 9px 9px",
         borderRadius: 999,
-        border: "1px solid #e5e7eb",
+        border: "1px solid rgba(124,58,237,0.14)",
         background: "#ffffff",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        boxShadow: "0 2px 10px rgba(109,40,217,0.1), 0 1px 3px rgba(0,0,0,0.05)",
       }}
     >
       <span
@@ -76,7 +76,18 @@ export function SectorsBand() {
         }
       `}</style>
 
-      <section style={{ padding: "72px 0 64px", background: BG, borderBottom: "1px solid #ede9fe" }}>
+      <section
+        style={{
+          padding: "0 0 64px",
+          background: "radial-gradient(ellipse 90% 140% at 50% 50%, #ede9fe 0%, #fafaf9 68%)",
+          borderTop: "1px solid rgba(196,181,253,0.6)",
+          borderBottom: "1px solid rgba(196,181,253,0.6)",
+          boxShadow: "0 4px 48px rgba(109,40,217,0.07), inset 0 1px 0 rgba(255,255,255,0.9)",
+        }}
+      >
+        {/* Top gradient accent line */}
+        <div style={{ height: 2, background: "linear-gradient(90deg, transparent 0%, #c4b5fd 40%, #a78bfa 50%, #c4b5fd 60%, transparent 100%)", marginBottom: "72px" }} />
+
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -105,11 +116,11 @@ export function SectorsBand() {
           {/* Edge fades */}
           <div
             className="absolute inset-y-0 left-0 z-10 pointer-events-none"
-            style={{ width: 160, background: `linear-gradient(to right, ${BG} 15%, transparent)` }}
+            style={{ width: 160, background: `linear-gradient(to right, ${BG_EDGE} 15%, transparent)` }}
           />
           <div
             className="absolute inset-y-0 right-0 z-10 pointer-events-none"
-            style={{ width: 160, background: `linear-gradient(to left, ${BG} 15%, transparent)` }}
+            style={{ width: 160, background: `linear-gradient(to left, ${BG_EDGE} 15%, transparent)` }}
           />
 
           {/* Row 1 — scrolls left */}

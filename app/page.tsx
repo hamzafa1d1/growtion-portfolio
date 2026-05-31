@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { FloatingWhatsApp } from "@/components/ui/FloatingWhatsApp";
-import { RocketAnimation } from "@/components/ui/RocketAnimation";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
 import { Results } from "@/components/sections/Results";
@@ -20,7 +19,6 @@ export default async function Home() {
     <>
       <Navbar />
       <FloatingWhatsApp />
-      <RocketAnimation />
       <main>
         <Hero />
         <Services />

@@ -5,7 +5,7 @@ import type { AssetCategory } from "@/lib/assets";
 
 // Must match lib/auth.ts SESSION_TOKEN
 const SESSION_TOKEN = "gw-sess-f3a9b2c1d7e4f6a0b8c2d5e1f9a3b7c4";
-const VIDEO_CATEGORIES: AssetCategory[] = ["portfolio-video", "portfolio-ugc"];
+const VIDEO_CATEGORIES: AssetCategory[] = ["portfolio-video", "portfolio-ugc", "filming-video"];
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = (await request.json()) as HandleUploadBody;

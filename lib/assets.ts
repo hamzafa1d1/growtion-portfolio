@@ -1,6 +1,6 @@
 import { list } from "@vercel/blob";
 
-export type AssetCategory = "portfolio-video" | "portfolio-ugc" | "portfolio-landing" | "testimonials-review" | "results-screenshot";
+export type AssetCategory = "portfolio-video" | "portfolio-ugc" | "portfolio-landing" | "testimonials-review" | "results-screenshot" | "filming-video";
 
 export interface AssetMap {
   "portfolio-video": (string | null)[];    // 4 slots
@@ -8,6 +8,7 @@ export interface AssetMap {
   "portfolio-landing": (string | null)[];  // 6 slots
   "testimonials-review": (string | null)[]; // 5 slots
   "results-screenshot": (string | null)[];  // 6 slots
+  "filming-video": (string | null)[];      // 6 slots
 }
 
 /**
@@ -21,6 +22,7 @@ export async function getAssets(): Promise<AssetMap> {
     "portfolio-landing": [null, null, null, null, null, null],
     "testimonials-review": [null, null, null, null, null],
     "results-screenshot": [null, null, null, null, null, null],
+    "filming-video": [null, null, null, null, null, null],
   };
 
   if (!process.env.BLOB_READ_WRITE_TOKEN) {

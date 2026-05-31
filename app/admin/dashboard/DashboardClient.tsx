@@ -14,7 +14,7 @@ function isVideo(url: string) {
 }
 
 function acceptForCategory(category: AssetCategory) {
-  if (category === "portfolio-video" || category === "portfolio-ugc") {
+  if (category === "portfolio-video" || category === "portfolio-ugc" || category === "filming-video") {
     return "video/mp4,video/webm,video/quicktime";
   }
   return "image/jpeg,image/png,image/webp,image/gif";
@@ -30,6 +30,7 @@ const SECTIONS: {
   { category: "results-screenshot", label: "Résultats (Campagnes)", icon: "📊", count: 6, hint: "Screenshots de campagnes Facebook Ads (JPG, PNG, WebP)" },
   { category: "portfolio-video",    label: "Vidéos Publicitaires",  icon: "📹", count: 4, hint: "Fichiers vidéo MP4 de vos pubs (MP4 — jusqu'à 200 MB)" },
   { category: "portfolio-ugc",      label: "Vidéos UGC",            icon: "🎯", count: 4, hint: "Fichiers vidéo MP4 UGC (MP4 — jusqu'à 200 MB)" },
+  { category: "filming-video",      label: "Vidéos Tournage",       icon: "🎬", count: 6, hint: "Vidéos de tournage / behind-the-scenes (MP4 — jusqu'à 200 MB)" },
   { category: "portfolio-landing",  label: "Landing Pages",         icon: "🖥️", count: 6, hint: "Screenshots des landing pages (JPG, PNG, WebP)" },
   { category: "testimonials-review",label: "Avis Clients",          icon: "💬", count: 5, hint: "Screenshots des avis WhatsApp / Instagram (JPG, PNG)" },
 ];

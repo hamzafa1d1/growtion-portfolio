@@ -1,18 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
-import { Play, Zap, Layout, Clapperboard, Check } from "lucide-react";
+import { Play, Zap, Layout, Clapperboard, Check, ArrowUpRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const WHATSAPP_NUMBER = "21656614879";
 
 const services = [
   {
     icon: <Play className="w-8 h-8" />,
     title: "Vidéos Publicitaires",
-    description: "Des vidéos ads percutantes qui capturent l’attention en moins de 3 secondes. Conçues pour convertir sur Facebook, TikTok et Instagram.",
+    description: "Des vidéos ads percutantes qui capturent l'attention en moins de 3 secondes. Conçues pour convertir sur Facebook, TikTok et Instagram.",
     features: ["Hook accrocheur", "Script optimisé", "Montage pro", "Version multiformat"],
     accentColor: "#7c3aed",
-    msg: "Bonjour! Je suis intéressé(e) par vos Vidéos Publicitaires.",
+    gradientEnd: "#a855f7",
   },
   {
     icon: <Zap className="w-8 h-8" />,
@@ -20,15 +19,15 @@ const services = [
     description: "Du contenu authentique créé par de vrais créateurs. Le format qui convertit le mieux — ressemble à des avis organiques.",
     features: ["Authenticité 100%", "Casting créateurs", "Plusieurs angles", "Haute conversion"],
     accentColor: "#6d28d9",
-    msg: "Bonjour! Je suis intéressé(e) par vos Vidéos UGC.",
+    gradientEnd: "#8b5cf6",
   },
   {
     icon: <Layout className="w-8 h-8" />,
     title: "Landing Pages",
-    description: "Des pages de vente optimisées qui guident le visiteur vers l’achat. Design persuasif, copywriting émotionnel.",
+    description: "Des pages de vente optimisées qui guident le visiteur vers l'achat. Design persuasif, copywriting émotionnel.",
     features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
     accentColor: "#7c3aed",
-    msg: "Bonjour! Je suis intéressé(e) par votre service Landing Page.",
+    gradientEnd: "#a855f7",
   },
   {
     icon: <Clapperboard className="w-8 h-8" />,
@@ -36,50 +35,104 @@ const services = [
     description: "Tournage professionnel on-location ou en studio. Des productions de haute qualité qui donnent une image premium à votre marque.",
     features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
     accentColor: "#5b21b6",
-    msg: "Bonjour! Je suis intéressé(e) par votre service Filmage.",
+    gradientEnd: "#7c3aed",
   },
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.65, ease: EASE } },
+};
+
 export function Services() {
   return (
-    <section id="services" className="section-light py-24 px-6"
-      style={{ borderTop: "1px solid #ede9fe", borderBottom: "1px solid #ede9fe" }}>
+    <section
+      id="services"
+      className="section-light py-24 px-6"
+      style={{ borderTop: "1px solid #ede9fe", borderBottom: "1px solid #ede9fe" }}
+    >
       <div className="max-w-7xl mx-auto">
-
-        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.5, ease: EASE }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: EASE }}
           className="text-center mb-16"
         >
-          <p className="text-purple-600 text-sm font-bold tracking-widest uppercase mb-3">Ce qu&apos;on fait pour vous</p>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900" style={{ fontFamily: "Arial Black, sans-serif" }}>
+          <p className="text-purple-600 text-sm font-bold tracking-widest uppercase mb-3">
+            Ce qu&apos;on fait pour vous
+          </p>
+          <h2
+            className="text-4xl md:text-5xl font-black text-gray-900"
+            style={{ fontFamily: "Arial Black, sans-serif" }}
+          >
             NOS <span className="gradient-text">SERVICES</span>
           </h2>
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((s, i) => (
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          {services.map((s) => (
             <motion.div
               key={s.title}
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.55, ease: EASE }}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="relative bg-white rounded-3xl p-8 flex flex-col gap-5"
+              variants={itemVariants}
+              whileHover={{
+                y: -10,
+                boxShadow: `0 28px 60px rgba(109,40,217,0.2)`,
+                transition: { duration: 0.25, ease: "easeOut" },
+              }}
+              className="relative bg-white rounded-3xl p-8 flex flex-col gap-5 group overflow-hidden"
               style={{
                 border: "1px solid #ede9fe",
                 boxShadow: "0 2px 12px rgba(109,40,217,0.07)",
               }}
             >
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white"
-                style={{ background: `linear-gradient(135deg, ${s.accentColor}, #a855f7)` }}>
-                {s.icon}
+              {/* Accent top bar */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[3px] rounded-t-3xl"
+                style={{
+                  background: `linear-gradient(90deg, ${s.accentColor}, ${s.gradientEnd})`,
+                }}
+              />
+
+              {/* Arrow badge — slides in on hover */}
+              <div className="absolute top-6 right-6 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center"
+                  style={{ background: "#f3eeff" }}
+                >
+                  <ArrowUpRight className="w-4 h-4 text-purple-600" />
+                </div>
               </div>
 
+              {/* Icon badge with spring hover */}
+              <motion.div
+                whileHover={{
+                  scale: 1.12,
+                  rotate: 8,
+                  transition: { type: "spring", stiffness: 400, damping: 15 },
+                }}
+                className="w-14 h-14 rounded-2xl flex items-center justify-center text-white self-start"
+                style={{
+                  background: `linear-gradient(135deg, ${s.accentColor}, ${s.gradientEnd})`,
+                }}
+              >
+                {s.icon}
+              </motion.div>
+
               <h3 className="text-xl font-black text-gray-900">{s.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{s.description}</p>
+              <p className="text-gray-500 text-sm leading-relaxed flex-1">{s.description}</p>
 
               <ul className="flex flex-col gap-2">
                 {s.features.map((f) => (
@@ -91,7 +144,7 @@ export function Services() {
               </ul>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

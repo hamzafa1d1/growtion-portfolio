@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Play, Zap, Layout, Clapperboard, ArrowRight, Check } from "lucide-react";
+import { Play, Zap, Layout, Clapperboard, Check } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const WHATSAPP_NUMBER = "21656614879";
@@ -89,16 +89,6 @@ export function Services() {
                   </li>
                 ))}
               </ul>
-
-              <motion.a
-                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(s.msg)}`}
-                target="_blank" rel="noopener noreferrer"
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                className="flex items-center gap-2 font-bold text-sm mt-auto pt-2 text-purple-600 hover:text-purple-700"
-              >
-                Commander maintenant <ArrowRight className="w-4 h-4" />
-              </motion.a>
             </motion.div>
           ))}
         </div>

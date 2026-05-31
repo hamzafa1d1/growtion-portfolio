@@ -17,6 +17,10 @@ const TESTIMONIAL_DATA = [
 ];
 
 export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
+  const filledReviews = TESTIMONIAL_DATA
+    .map((t, i) => ({ ...t, url: reviewUrls[i] ?? null }))
+    .filter((item): item is typeof TESTIMONIAL_DATA[number] & { url: string } => !!item.url);
+
   return (
     <section id="avis" className="section-white py-24 px-6"
       style={{ borderBottom: "1px solid #ede9fe" }}>
@@ -35,11 +39,10 @@ export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-12">
-          {TESTIMONIAL_DATA.map((t, i) => {
-            const url = reviewUrls[i] ?? null;
-            return (
+        {/* Cards — only rendered when images are uploaded */}
+        {filledReviews.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-12">
+            {filledReviews.map((t, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
@@ -48,25 +51,13 @@ export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
                 className="relative rounded-3xl overflow-hidden bg-white"
                 style={{ border: "1px solid #ede9fe", minHeight: 270, boxShadow: "0 2px 12px rgba(109,40,217,0.07)" }}
               >
-                {url ? (
-                  <div className="relative w-full" style={{ minHeight: 270 }}>
-                    <Image src={url} alt={t.name} fill className="object-cover" sizes="300px" />
-                  </div>
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-5"
-                    style={{ background: "linear-gradient(160deg, #f5f3ff, #ede9fe)", minHeight: 270 }}>
-                    <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center text-white font-black text-base">
-                      {i + 1}
-                    </div>
-                    <p className="text-gray-800 font-bold text-sm text-center">{t.name}</p>
-                    <p className="text-purple-700 text-xs font-bold text-center">{t.result}</p>
-                    <p className="text-gray-400 text-xs">{t.platform}</p>
-                  </div>
-                )}
+                <div className="relative w-full" style={{ minHeight: 270 }}>
+                  <Image src={t.url} alt={t.name} fill className="object-cover" sizes="300px" />
+                </div>
               </motion.div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* Social proof */}
         <motion.div

@@ -140,6 +140,24 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
   const [activeTab, setActiveTab] = useState<Tab>("Vidéos Pub");
   const [lightbox, setLightbox] = useState<Lightbox | null>(null);
 
+  const filledVideos = VIDEO_HOOKS
+    .map((label, i) => ({ label, url: videoUrls[i] ?? null }))
+    .filter((item): item is { label: string; url: string } => !!item.url);
+  const filledUgc = ["Vidéo UGC 1", "Vidéo UGC 2", "Vidéo UGC 3", "Vidéo UGC 4"]
+    .map((label, i) => ({ label, url: ugcUrls[i] ?? null }))
+    .filter((item): item is { label: string; url: string } => !!item.url);
+  const filledLandings = LANDING_TITLES
+    .map((title, i) => ({ title, url: landingUrls[i] ?? null }))
+    .filter((item): item is { title: string; url: string } => !!item.url);
+
+  const availableTabs = tabs.filter((tab) =>
+    (tab === "Vidéos Pub" && filledVideos.length > 0) ||
+    (tab === "Vidéos UGC" && filledUgc.length > 0) ||
+    (tab === "Landing Pages" && filledLandings.length > 0)
+  );
+
+  const currentTab = availableTabs.includes(activeTab) ? activeTab : availableTabs[0];
+
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
   // Escape key + body scroll lock
@@ -153,6 +171,8 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
       document.body.style.overflow = "";
     };
   }, [lightbox, closeLightbox]);
+
+  if (availableTabs.length === 0) return null;
 
   return (
     <>
@@ -175,7 +195,7 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
 
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-10 flex-wrap">
-            {tabs.map((tab) => (
+            {availableTabs.map((tab) => (
               <motion.button
                 key={tab} onClick={() => setActiveTab(tab)}
                 whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
@@ -188,25 +208,25 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
             ))}
           </div>
 
-          <motion.div key={activeTab} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: EASE }}>
-            {activeTab === "Vidéos Pub" && (
+          <motion.div key={currentTab} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: EASE }}>
+            {currentTab === "Vidéos Pub" && (
               <div className="flex flex-wrap justify-center gap-6">
-                {VIDEO_HOOKS.map((hook, i) => (
-                  <PhoneMockup key={i} imageUrl={videoUrls[i] ?? null} label={hook} index={i} onOpen={setLightbox} />
+                {filledVideos.map((item, i) => (
+                  <PhoneMockup key={i} imageUrl={item.url} label={item.label} index={i} onOpen={setLightbox} />
                 ))}
               </div>
             )}
-            {activeTab === "Vidéos UGC" && (
+            {currentTab === "Vidéos UGC" && (
               <div className="flex flex-wrap justify-center gap-6">
-                {["Vidéo UGC 1","Vidéo UGC 2","Vidéo UGC 3","Vidéo UGC 4"].map((label, i) => (
-                  <PhoneMockup key={i} imageUrl={ugcUrls[i] ?? null} label={label} index={i} onOpen={setLightbox} />
+                {filledUgc.map((item, i) => (
+                  <PhoneMockup key={i} imageUrl={item.url} label={item.label} index={i} onOpen={setLightbox} />
                 ))}
               </div>
             )}
-            {activeTab === "Landing Pages" && (
+            {currentTab === "Landing Pages" && (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {LANDING_TITLES.map((title, i) => (
-                  <LandingPageMockup key={i} imageUrl={landingUrls[i] ?? null} title={title} index={i} onOpen={setLightbox} />
+                {filledLandings.map((item, i) => (
+                  <LandingPageMockup key={i} imageUrl={item.url} title={item.title} index={i} onOpen={setLightbox} />
                 ))}
               </div>
             )}

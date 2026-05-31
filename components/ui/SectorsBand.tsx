@@ -28,70 +28,70 @@ const SECTORS = [
 
 const ITEMS = [...SECTORS, ...SECTORS, ...SECTORS];
 
-const DIVIDER = (
-  <span
-    aria-hidden
-    style={{
-      display: "inline-block",
-      width: 5,
-      height: 5,
-      borderRadius: "50%",
-      background: "rgba(124,58,237,0.35)",
-      margin: "0 28px",
-      verticalAlign: "middle",
-      flexShrink: 0,
-    }}
-  />
-);
-
 export function SectorsBand() {
   return (
-    <div
-      className="w-full overflow-hidden select-none"
-      style={{
-        background: "#ffffff",
-        borderTop: "1px solid #ede9fe",
-        borderBottom: "1px solid #ede9fe",
-        padding: "14px 0",
-      }}
-    >
-      <motion.div
-        className="flex items-center whitespace-nowrap"
-        animate={{ x: ["0%", "-33.333%"] }}
-        transition={{ duration: 32, ease: "linear", repeat: Infinity }}
-        style={{ willChange: "transform" }}
+    <section className="section-white py-12 px-0" style={{ borderBottom: "1px solid #ede9fe" }}>
+      {/* Heading */}
+      <p
+        className="text-center text-xs font-bold tracking-[0.25em] uppercase mb-8"
+        style={{ color: "#a78bfa" }}
       >
-        {ITEMS.map((s, i) => (
-          <span
-            key={i}
-            className="inline-flex items-center gap-2.5 flex-shrink-0"
-            style={{
-              padding: "0 4px",
-              fontFamily: "Arial Black, Impact, sans-serif",
-              fontWeight: 900,
-              fontSize: "0.72rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "#6d28d9",
-            }}
-          >
-            <span
-              className="flex-shrink-0 flex items-center justify-center rounded-lg"
+        Secteurs que nous avons propulsés
+      </p>
+
+      {/* Track with edge fades */}
+      <div className="relative overflow-hidden">
+        {/* Left fade */}
+        <div
+          className="absolute left-0 top-0 h-full w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #ffffff, transparent)" }}
+        />
+        {/* Right fade */}
+        <div
+          className="absolute right-0 top-0 h-full w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #ffffff, transparent)" }}
+        />
+
+        <motion.div
+          className="flex items-center"
+          style={{ width: "max-content" }}
+          animate={{ x: ["0%", "-33.333%"] }}
+          transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+        >
+          {ITEMS.map((s, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 mx-5 flex-shrink-0"
               style={{
-                width: 28,
-                height: 28,
-                background: "linear-gradient(135deg, #ede9fe, #ddd6fe)",
+                padding: "10px 20px",
+                borderRadius: 999,
+                border: "1px solid #ede9fe",
+                background: "#faf9ff",
               }}
             >
-              <s.Icon
-                style={{ width: 14, height: 14, color: "#7c3aed", strokeWidth: 2.2 }}
-              />
-            </span>
-            {s.label}
-            {DIVIDER}
-          </span>
-        ))}
-      </motion.div>
-    </div>
+              <span
+                className="flex items-center justify-center rounded-full flex-shrink-0"
+                style={{ width: 32, height: 32, background: "#ede9fe" }}
+              >
+                <s.Icon style={{ width: 15, height: 15, color: "#7c3aed", strokeWidth: 2 }} />
+              </span>
+              <span
+                style={{
+                  fontFamily: "Arial, Helvetica, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.82rem",
+                  letterSpacing: "0.04em",
+                  color: "#4c1d95",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {s.label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 }
+

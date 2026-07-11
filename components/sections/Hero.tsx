@@ -31,29 +31,6 @@ const services = [
   { icon: <Clapperboard className="w-6 h-6 text-white" />, label: "TOURNAGE",tag: "Production" },
 ];
 
-function isVideo(url: string) {
-  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
-}
-
-/** Real uploaded work shown behind a hero card, with a brand-purple overlay so
- *  the white label stays readable. Renders nothing when the slot is empty
- *  (the card's gradient background then shows through). */
-function CardMedia({ url }: { url: string | null }) {
-  if (!url) return null;
-  return (
-    <>
-      {isVideo(url) ? (
-        <video src={`${url}#t=0.1`} muted playsInline preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover" />
-      ) : (
-        <Image src={url} alt="" fill className="object-cover" sizes="(max-width:768px) 60vw, 320px" />
-      )}
-      <div className="absolute inset-0"
-        style={{ background: "linear-gradient(160deg, rgba(124,58,237,0.45) 0%, rgba(76,29,149,0.78) 100%)" }} />
-    </>
-  );
-}
-
 const socials = [
   {
     href: `https://wa.me/${WHATSAPP_NUMBER}?text=${WA_MSG}`,
@@ -69,7 +46,7 @@ const socials = [
   },
 ];
 
-export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
+export function Hero() {
   return (
     <section id="hero" className="section-white relative min-h-screen flex items-center overflow-hidden pt-20">
 
@@ -152,7 +129,6 @@ export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
                   boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
                 }}
               >
-                <CardMedia url={cardMedia[0] ?? null} />
                 <div className="relative z-10 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[0].icon}
                 </div>
@@ -186,7 +162,6 @@ export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
                   boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
                 }}
               >
-                <CardMedia url={cardMedia[1] ?? null} />
                 <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[1].icon}
                 </div>
@@ -218,7 +193,6 @@ export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
                   boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
                 }}
               >
-                <CardMedia url={cardMedia[2] ?? null} />
                 <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[2].icon}
                 </div>

@@ -6,7 +6,7 @@ import { TrendingUp } from "lucide-react";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export interface ResultsProps {
-  screenshotUrls?: (string | null)[];
+  screenshotUrls?: string[];
 }
 
 const containerVariants = {
@@ -20,9 +20,7 @@ const itemVariants = {
 };
 
 export function Results({ screenshotUrls = [] }: ResultsProps) {
-  const filled = Array.from({ length: 6 }, (_, i) => screenshotUrls[i] ?? null).filter(
-    (url): url is string => !!url,
-  );
+  const filled = screenshotUrls.filter((url): url is string => !!url);
 
   if (filled.length === 0) return null;
 

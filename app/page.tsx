@@ -16,6 +16,7 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function Home() {
   const [assets, pricing] = await Promise.all([getAssets(), getPricing()]);
+  const urls = (category: keyof typeof assets) => assets[category].map((a) => a.url);
 
   return (
     <>
@@ -24,21 +25,21 @@ export default async function Home() {
       <main>
         <Hero
           cardMedia={[
-            assets["portfolio-video"][0],
-            assets["portfolio-ugc"][0],
-            assets["portfolio-landing"][0],
+            assets["portfolio-video"][0]?.url ?? null,
+            assets["portfolio-ugc"][0]?.url ?? null,
+            assets["portfolio-landing"][0]?.url ?? null,
           ]}
         />
         <SectorsBand />
         <Services />
-        <Results screenshotUrls={assets["results-screenshot"]} />
+        <Results screenshotUrls={urls("results-screenshot")} />
         <Portfolio
-          videoUrls={assets["portfolio-video"]}
-          ugcUrls={assets["portfolio-ugc"]}
-          landingUrls={assets["portfolio-landing"]}
+          videoUrls={urls("portfolio-video")}
+          ugcUrls={urls("portfolio-ugc")}
+          landingUrls={urls("portfolio-landing")}
         />
-        <FilmingVideos videoUrls={assets["filming-video"]} />
-        <Testimonials reviewUrls={assets["testimonials-review"]} />
+        <FilmingVideos videoUrls={urls("filming-video")} />
+        <Testimonials reviewUrls={urls("testimonials-review")} />
         <Pricing config={pricing} />
         <CTA />
       </main>

@@ -43,7 +43,7 @@ function CardMedia({ url }: { url: string | null }) {
   return (
     <>
       {isVideo(url) ? (
-        <video src={url} autoPlay muted loop playsInline
+        <video src={`${url}#t=0.1`} muted playsInline preload="metadata"
           className="absolute inset-0 w-full h-full object-cover" />
       ) : (
         <Image src={url} alt="" fill className="object-cover" sizes="(max-width:768px) 60vw, 320px" />

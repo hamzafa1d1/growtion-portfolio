@@ -1,12 +1,12 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
-import { Maximize2, X } from "lucide-react";
+import { Maximize2, X, Play } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export interface FilmingVideosProps {
-  videoUrls?: (string | null)[];
+  videoUrls?: string[];
 }
 
 type Lightbox = { url: string; index: number };
@@ -40,14 +40,20 @@ function PhoneMockup({
         }}
         onClick={() => onOpen({ url, index })}
       >
+        {/* First frame only — no autoplay. #t forces a poster frame. */}
         <video
-          src={url}
-          autoPlay
+          src={`${url}#t=0.1`}
           muted
-          loop
           playsInline
+          preload="metadata"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* Play affordance so the still frame reads as a video */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg" style={{ background: "rgba(124,58,237,0.9)" }}>
+            <Play className="w-5 h-5 text-white ml-0.5" fill="white" />
+          </div>
+        </div>
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end justify-end p-2"
           style={{ background: "rgba(0,0,0,0.32)" }}
@@ -66,9 +72,7 @@ export function FilmingVideos({ videoUrls = [] }: FilmingVideosProps) {
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
-  const filled = Array.from({ length: 6 }, (_, i) => videoUrls[i] ?? null).filter(
-    (url): url is string => !!url
-  );
+  const filled = videoUrls.filter((url): url is string => !!url);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -155,7 +159,6 @@ export function FilmingVideos({ videoUrls = [] }: FilmingVideosProps) {
               >
                 <video
                   src={lightbox.url}
-                  autoPlay
                   controls
                   loop
                   playsInline

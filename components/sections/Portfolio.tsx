@@ -9,20 +9,12 @@ const tabs = ["Vidéos Pub", "Vidéos UGC", "Landing Pages"] as const;
 type Tab = (typeof tabs)[number];
 
 export interface PortfolioProps {
-  videoUrls?: (string | null)[];
-  ugcUrls?: (string | null)[];
-  landingUrls?: (string | null)[];
+  videoUrls?: string[];
+  ugcUrls?: string[];
+  landingUrls?: string[];
 }
 
 type Lightbox = { url: string; label: string; type: "video" | "image" };
-
-const VIDEO_HOOKS = [
-  "CAP CUT هذا PRO",
-  "ترجع للدار بلا طاقة",
-  "كل تفاصيل تحضير روحك",
-  "الحماس اختفى — المشكلة ليست أنت",
-];
-const LANDING_TITLES = ["Massage Gun", "Sac Magnétique", "Équipement Fitness", "Table de Massage", "Coussin Orthopédique", "Appareil Sport"];
 
 function isVideo(url: string) {
   return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
@@ -60,14 +52,21 @@ function PhoneMockup({
       >
         {imageUrl ? (
           isVideo(imageUrl) ? (
-            <video
-              src={imageUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
+            <>
+              {/* First frame only — no autoplay. */}
+              <video
+                src={`${imageUrl}#t=0.1`}
+                muted
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg" style={{ background: "rgba(124,58,237,0.9)" }}>
+                  <Play className="w-5 h-5 text-white ml-0.5" fill="white" />
+                </div>
+              </div>
+            </>
           ) : (
             <Image src={imageUrl} alt={label} fill className="object-cover" sizes="150px" />
           )
@@ -140,15 +139,15 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
   const [activeTab, setActiveTab] = useState<Tab>("Vidéos Pub");
   const [lightbox, setLightbox] = useState<Lightbox | null>(null);
 
-  const filledVideos = VIDEO_HOOKS
-    .map((label, i) => ({ label, url: videoUrls[i] ?? null }))
-    .filter((item): item is { label: string; url: string } => !!item.url);
-  const filledUgc = ["Vidéo UGC 1", "Vidéo UGC 2", "Vidéo UGC 3", "Vidéo UGC 4"]
-    .map((label, i) => ({ label, url: ugcUrls[i] ?? null }))
-    .filter((item): item is { label: string; url: string } => !!item.url);
-  const filledLandings = LANDING_TITLES
-    .map((title, i) => ({ title, url: landingUrls[i] ?? null }))
-    .filter((item): item is { title: string; url: string } => !!item.url);
+  const filledVideos = videoUrls
+    .filter((url): url is string => !!url)
+    .map((url, i) => ({ url, label: `Vidéo Pub ${i + 1}` }));
+  const filledUgc = ugcUrls
+    .filter((url): url is string => !!url)
+    .map((url, i) => ({ url, label: `Vidéo UGC ${i + 1}` }));
+  const filledLandings = landingUrls
+    .filter((url): url is string => !!url)
+    .map((url, i) => ({ url, title: `Landing ${i + 1}` }));
 
   const availableTabs = tabs.filter((tab) =>
     (tab === "Vidéos Pub" && filledVideos.length > 0) ||
@@ -270,7 +269,6 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
                   <video
                     src={lightbox.url}
                     controls
-                    autoPlay
                     playsInline
                     style={{ width: "100%", maxHeight: "78vh", objectFit: "contain", display: "block", background: "#000" }}
                   />

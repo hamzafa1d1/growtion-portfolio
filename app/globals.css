@@ -11,6 +11,7 @@
   --color-purple-700: #6d28d9;
   --color-purple-900: #4c1d95;
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-display);
 }
 
 :root {
@@ -25,9 +26,16 @@
 body {
   background: #ffffff;
   color: #111827;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Heavy display type for headings — consistent across all devices. */
+.font-display {
+  font-family: var(--font-display), "Arial Black", Impact, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 /* Section separator utility */
@@ -68,3 +76,16 @@ body {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #f5f3ff; }
 ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 4px; }
+
+/* Respect users who ask for less motion — neutralize the many infinite/entrance
+   animations (decorative blobs, floats, pulse glows, framer-motion transitions). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -105,7 +105,7 @@ export function FilmingVideos({ videoUrls = [] }: FilmingVideosProps) {
             </p>
             <h2
               className="text-4xl md:text-5xl font-black text-gray-900"
-              style={{ fontFamily: "Arial Black, sans-serif" }}
+              style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}
             >
               VIDÉOS DE <span className="gradient-text">TOURNAGE</span>
             </h2>

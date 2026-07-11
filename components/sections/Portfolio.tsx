@@ -187,7 +187,7 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
             className="text-center mb-10"
           >
             <p className="text-purple-600 text-sm font-bold tracking-widest uppercase mb-3">Nos créations</p>
-            <h2 className="text-4xl md:text-5xl font-black text-gray-900" style={{ fontFamily: "Arial Black, sans-serif" }}>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>
               NOTRE <span className="gradient-text">PORTFOLIO</span>
             </h2>
             <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />

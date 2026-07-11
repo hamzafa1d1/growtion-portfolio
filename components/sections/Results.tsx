@@ -45,12 +45,12 @@ export function Results({ screenshotUrls = [] }: ResultsProps) {
           </p>
           <h2
             className="text-4xl md:text-5xl font-black text-gray-900"
-            style={{ fontFamily: "Arial Black, sans-serif" }}
+            style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}
           >
             NOS <span className="gradient-text">RÉSULTATS</span>
           </h2>
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />
-          <p className="text-gray-400 text-sm mt-4">
+          <p className="text-gray-500 text-sm mt-4">
             Screenshots de nos campagnes les plus performantes
           </p>
         </motion.div>

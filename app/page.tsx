@@ -22,7 +22,13 @@ export default async function Home() {
       <Navbar />
       <FloatingWhatsApp />
       <main>
-        <Hero />
+        <Hero
+          cardMedia={[
+            assets["portfolio-video"][0],
+            assets["portfolio-ugc"][0],
+            assets["portfolio-landing"][0],
+          ]}
+        />
         <SectorsBand />
         <Services />
         <Results screenshotUrls={assets["results-screenshot"]} />

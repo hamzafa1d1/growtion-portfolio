@@ -34,7 +34,7 @@ export function Pricing({ config }: { config?: PricingConfig }) {
           </p>
           <h2
             className="text-4xl md:text-5xl font-black text-white"
-            style={{ fontFamily: "Arial Black, sans-serif" }}
+            style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}
           >
             {title}
           </h2>

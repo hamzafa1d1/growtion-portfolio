@@ -31,6 +31,29 @@ const services = [
   { icon: <Layout className="w-6 h-6 text-white" />, label: "LANDING PAGE",tag: "Conversion" },
 ];
 
+function isVideo(url: string) {
+  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
+}
+
+/** Real uploaded work shown behind a hero card, with a brand-purple overlay so
+ *  the white label stays readable. Renders nothing when the slot is empty
+ *  (the card's gradient background then shows through). */
+function CardMedia({ url }: { url: string | null }) {
+  if (!url) return null;
+  return (
+    <>
+      {isVideo(url) ? (
+        <video src={url} autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover" />
+      ) : (
+        <Image src={url} alt="" fill className="object-cover" sizes="(max-width:768px) 60vw, 320px" />
+      )}
+      <div className="absolute inset-0"
+        style={{ background: "linear-gradient(160deg, rgba(124,58,237,0.45) 0%, rgba(76,29,149,0.78) 100%)" }} />
+    </>
+  );
+}
+
 const socials = [
   {
     href: `https://wa.me/${WHATSAPP_NUMBER}?text=${WA_MSG}`,
@@ -46,7 +69,7 @@ const socials = [
   },
 ];
 
-export function Hero() {
+export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
   return (
     <section id="hero" className="section-white relative min-h-screen flex items-center overflow-hidden pt-20">
 
@@ -78,12 +101,12 @@ export function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-6 w-full grid md:grid-cols-[1fr_1.1fr] gap-16 items-center py-20">
 
-        {/* ── LEFT: visual cards ── */}
+        {/* ── LEFT: visual cards (below headline on mobile) ── */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="flex flex-col gap-6"
+          className="flex flex-col gap-6 order-2 md:order-1"
         >
           {/* Logo + badge */}
           <motion.div
@@ -96,7 +119,7 @@ export function Hero() {
               <Image src="/logo.svg" alt="Growtion" width={52} height={52} />
             </div>
             <div>
-              <p className="font-black text-gray-900 text-xl tracking-widest" style={{ fontFamily: "Arial Black, sans-serif" }}>GROWTION</p>
+              <p className="font-black text-gray-900 text-xl tracking-widest" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>GROWTION</p>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 <span className="text-green-600 text-xs font-bold">Disponible · Tunisie</span>
@@ -105,7 +128,7 @@ export function Hero() {
           </motion.div>
 
           {/* Service cards — masonry layout with float */}
-          <div className="grid grid-cols-[1.3fr_1fr] gap-3">
+          <div className="grid grid-cols-[1.3fr_1fr] gap-3 w-full max-w-[440px] mx-auto md:mx-0">
 
             {/* Tall left card — outer: entrance + grid, inner: float + hover */}
             <motion.div
@@ -122,20 +145,20 @@ export function Hero() {
                   boxShadow: "0 32px 70px rgba(109,40,217,0.55)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="rounded-3xl p-5 flex flex-col justify-between"
+                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between -rotate-0 sm:-rotate-2"
                 style={{
                   background: "linear-gradient(160deg, #8b5cf6 0%, #6d28d9 100%)",
                   minHeight: 280,
                   boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
-                  rotate: "-1.5deg",
                 }}
               >
-                <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                <CardMedia url={cardMedia[0] ?? null} />
+                <div className="relative z-10 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[0].icon}
                 </div>
-                <div>
+                <div className="relative z-10">
                   <p className="text-purple-200 text-xs font-bold mb-1">{services[0].tag}</p>
-                  <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "Arial Black, sans-serif" }}>
+                  <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>
                     {services[0].label}
                   </p>
                 </div>
@@ -156,18 +179,18 @@ export function Hero() {
                   boxShadow: "0 24px 55px rgba(109,40,217,0.45)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="rounded-3xl p-5 flex flex-col justify-between"
+                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between rotate-0 sm:rotate-2"
                 style={{
                   background: "linear-gradient(160deg, #7c3aed 0%, #5b21b6 100%)",
                   minHeight: 132,
                   boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
-                  rotate: "2deg",
                 }}
               >
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                <CardMedia url={cardMedia[1] ?? null} />
+                <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[1].icon}
                 </div>
-                <div>
+                <div className="relative z-10">
                   <p className="text-purple-200 text-xs font-bold mb-0.5">{services[1].tag}</p>
                   <p className="text-white font-black text-base leading-tight">{services[1].label}</p>
                 </div>
@@ -188,18 +211,18 @@ export function Hero() {
                   boxShadow: "0 24px 55px rgba(168,85,246,0.45)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="rounded-3xl p-5 flex flex-col justify-between"
+                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between rotate-0 sm:rotate-1"
                 style={{
                   background: "linear-gradient(160deg, #a855f6 0%, #7c3aed 100%)",
                   minHeight: 132,
                   boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
-                  rotate: "1deg",
                 }}
               >
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                <CardMedia url={cardMedia[2] ?? null} />
+                <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                   {services[2].icon}
                 </div>
-                <div>
+                <div className="relative z-10">
                   <p className="text-purple-200 text-xs font-bold mb-0.5">{services[2].tag}</p>
                   <p className="text-white font-black text-base leading-tight">{services[2].label}</p>
                 </div>
@@ -229,15 +252,15 @@ export function Hero() {
                   className="text-center"
                 >
                   <p className="text-purple-700 font-black text-lg leading-none">{stat.value}</p>
-                  <p className="text-gray-400 text-xs mt-0.5">{stat.label}</p>
+                  <p className="text-gray-500 text-xs mt-0.5">{stat.label}</p>
                 </motion.div>
               </div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* ── RIGHT: headline + CTA ── */}
-        <div className="flex flex-col gap-8">
+        {/* ── RIGHT: headline + CTA (first on mobile) ── */}
+        <div className="flex flex-col gap-8 order-1 md:order-2">
 
           {/* Tagline */}
           <motion.p
@@ -252,7 +275,7 @@ export function Hero() {
           {/* Headline — per-line stagger */}
           <h1
             className="font-black leading-[1.08] text-gray-900"
-            style={{ fontFamily: "Arial Black, Impact, sans-serif", fontSize: "clamp(2.4rem, 5vw, 3.8rem)" }}
+            style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif", fontSize: "clamp(2.4rem, 5vw, 3.8rem)", letterSpacing: "-0.02em" }}
           >
             <motion.span
               initial={{ opacity: 0, y: 24 }}
@@ -325,7 +348,7 @@ export function Hero() {
             className="flex items-center gap-4"
           >
             <div className="flex-1 h-px bg-purple-100" />
-            <span className="text-gray-300 text-xs font-semibold">nous suivre</span>
+            <span className="text-gray-500 text-xs font-semibold">nous suivre</span>
             <div className="flex-1 h-px bg-purple-100" />
           </motion.div>
 

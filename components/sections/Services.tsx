@@ -62,18 +62,18 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: EASE }}
-          className="text-center mb-16"
+          className="mb-16 max-w-2xl"
         >
           <p className="text-purple-600 text-sm font-bold tracking-widest uppercase mb-3">
             Ce qu&apos;on fait pour vous
           </p>
           <h2
             className="text-4xl md:text-5xl font-black text-gray-900"
-            style={{ fontFamily: "Arial Black, sans-serif" }}
+            style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}
           >
             NOS <span className="gradient-text">SERVICES</span>
           </h2>
-          <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />
+          <div className="mt-4 h-1 w-16 rounded-full bg-purple-600" />
         </motion.div>
 
         <motion.div

@@ -41,7 +41,7 @@ export function CTA() {
           viewport={{ once: true }} transition={{ duration: 0.55, ease: EASE }}
         >
           <p className="text-purple-600 text-sm font-bold tracking-widest uppercase mb-4">Prêt à passer à l&apos;action?</p>
-          <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight" style={{ fontFamily: "Arial Black, sans-serif" }}>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>
             TRANSFORME TON{" "}
             <span className="gradient-text">E-COMMERCE</span>
             <br />DÈS AUJOURD&apos;HUI
@@ -65,7 +65,7 @@ export function CTA() {
           <ArrowRight className="w-6 h-6" />
         </motion.a>
 
-        <p className="text-gray-400 text-sm font-medium">+216 56 614 879</p>
+        <p className="text-gray-500 text-sm font-medium">+216 56 614 879</p>
 
         <motion.div
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
@@ -73,7 +73,7 @@ export function CTA() {
           className="flex gap-6 items-center"
         >
           <a href="https://www.instagram.com/growtion_creatives/" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gray-400 hover:text-purple-600 transition-colors">
+            className="flex items-center gap-2 text-gray-500 hover:text-purple-600 transition-colors">
             <InstagramIcon className="w-5 h-5" />
             <span className="text-sm font-semibold">growtion_creatives</span>
           </a>
@@ -86,7 +86,7 @@ export function CTA() {
             <Image src="/logo.svg" alt="Growtion" width={22} height={22} />
             <span className="text-gray-500 text-sm font-black tracking-widest">GROWTION</span>
           </div>
-          <p className="text-gray-400 text-xs">Sell Smart · Grow Faster · © 2025 Growtion. Tous droits réservés.</p>
+          <p className="text-gray-500 text-xs">Sell Smart · Grow Faster · © 2025 Growtion. Tous droits réservés.</p>
         </div>
       </div>
     </section>

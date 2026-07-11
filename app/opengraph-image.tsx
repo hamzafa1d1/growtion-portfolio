@@ -53,8 +53,7 @@ export default function Image() {
         <div style={{ display: "flex", gap: 48, fontSize: 30, color: "#ede9fe" }}>
           <span>Vidéos Pub</span>
           <span>UGC</span>
-          <span>Landing Pages</span>
-          <span>Filmage</span>
+          <span>Tournage</span>
         </div>
       </div>
     ),

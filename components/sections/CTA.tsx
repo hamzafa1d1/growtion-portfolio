@@ -47,7 +47,7 @@ export function CTA() {
             <br />DÈS AUJOURD&apos;HUI
           </h2>
           <p className="text-gray-500 text-lg mt-4 max-w-2xl mx-auto">
-            Rejoins plus de 200 clients qui ont scalé leur business avec Growtion. Des créatives qui convertissent — garanti.
+            Rejoins plus de 200 clients qui ont scalé leur business avec Growtion. Des créatives qui convertissent.
           </p>
         </motion.div>
 

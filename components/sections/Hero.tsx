@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { MessageCircle, Play, Zap, Layout, ArrowRight, ChevronDown } from "lucide-react";
+import { MessageCircle, Play, Zap, Clapperboard, ArrowRight, ChevronDown } from "lucide-react";
 
 const WHATSAPP_NUMBER = "21656614879";
 const WA_MSG = encodeURIComponent("Bonjour Growtion! Je suis intéressé(e) par vos services créatifs.");
@@ -28,7 +28,7 @@ function WhatsAppIcon() {
 const services = [
   { icon: <Play className="w-6 h-6 text-white" />,   label: "VIDÉOS PUB",  tag: "Publicité"  },
   { icon: <Zap className="w-6 h-6 text-white" />,    label: "UGC",         tag: "Influence"  },
-  { icon: <Layout className="w-6 h-6 text-white" />, label: "LANDING PAGE",tag: "Conversion" },
+  { icon: <Clapperboard className="w-6 h-6 text-white" />, label: "TOURNAGE",tag: "Production" },
 ];
 
 function isVideo(url: string) {
@@ -304,7 +304,7 @@ export function Hero({ cardMedia = [] }: { cardMedia?: (string | null)[] }) {
             transition={{ delay: 0.58, duration: 0.5, ease: EASE }}
             className="text-gray-500 text-base leading-relaxed max-w-md"
           >
-            Vidéos publicitaires, UGC et landing pages qui convertissent — livrées vite, conçues pour scaler.
+            Vidéos publicitaires, UGC et vidéos de tournage qui convertissent — livrées vite, conçues pour scaler.
           </motion.p>
 
           {/* Primary CTA */}

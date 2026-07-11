@@ -3,7 +3,6 @@ import { list } from "@vercel/blob";
 export type AssetCategory =
   | "portfolio-video"
   | "portfolio-ugc"
-  | "portfolio-landing"
   | "testimonials-review"
   | "results-screenshot"
   | "filming-video";
@@ -11,7 +10,6 @@ export type AssetCategory =
 export const ASSET_CATEGORIES: AssetCategory[] = [
   "portfolio-video",
   "portfolio-ugc",
-  "portfolio-landing",
   "testimonials-review",
   "results-screenshot",
   "filming-video",
@@ -34,7 +32,6 @@ function emptyMap(): AssetMap {
   return {
     "portfolio-video": [],
     "portfolio-ugc": [],
-    "portfolio-landing": [],
     "testimonials-review": [],
     "results-screenshot": [],
     "filming-video": [],

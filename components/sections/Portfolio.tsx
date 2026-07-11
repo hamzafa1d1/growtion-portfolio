@@ -1,17 +1,16 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
-import { Play, ExternalLink, X, Maximize2, ZoomIn } from "lucide-react";
+import { Play, X, Maximize2 } from "lucide-react";
 import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const tabs = ["Vidéos Pub", "Vidéos UGC", "Landing Pages"] as const;
+const tabs = ["Vidéos Pub", "Vidéos UGC"] as const;
 type Tab = (typeof tabs)[number];
 
 export interface PortfolioProps {
   videoUrls?: string[];
   ugcUrls?: string[];
-  landingUrls?: string[];
 }
 
 type Lightbox = { url: string; label: string; type: "video" | "image" };
@@ -93,49 +92,7 @@ function PhoneMockup({
   );
 }
 
-function LandingPageMockup({
-  imageUrl, title, index, onOpen,
-}: {
-  imageUrl: string | null;
-  title: string;
-  index: number;
-  onOpen: (item: Lightbox) => void;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }} transition={{ delay: index * 0.07, duration: 0.5, ease: EASE }}
-      whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
-      className="relative rounded-2xl overflow-hidden group bg-white"
-      style={{
-        border: "1px solid #ede9fe", height: 260,
-        boxShadow: "0 2px 12px rgba(109,40,217,0.08)",
-        cursor: imageUrl ? "pointer" : "default",
-      }}
-      onClick={() => {
-        if (imageUrl) onOpen({ url: imageUrl, label: title, type: "image" });
-      }}
-    >
-      {imageUrl ? (
-        <Image src={imageUrl} alt={title} fill className="object-cover" sizes="400px" />
-      ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center gap-3"
-          style={{ background: "linear-gradient(160deg, #f5f3ff, #ede9fe)" }}>
-          <ExternalLink className="w-7 h-7 text-purple-600" />
-          <p className="text-purple-800 font-bold text-sm">{title}</p>
-        </div>
-      )}
-      {imageUrl && (
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center"
-          style={{ background: "rgba(109,40,217,0.48)" }}>
-          <ZoomIn className="w-9 h-9 text-white drop-shadow-md" />
-        </div>
-      )}
-    </motion.div>
-  );
-}
-
-export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: PortfolioProps) {
+export function Portfolio({ videoUrls = [], ugcUrls = [] }: PortfolioProps) {
   const [activeTab, setActiveTab] = useState<Tab>("Vidéos Pub");
   const [lightbox, setLightbox] = useState<Lightbox | null>(null);
 
@@ -145,14 +102,10 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
   const filledUgc = ugcUrls
     .filter((url): url is string => !!url)
     .map((url, i) => ({ url, label: `Vidéo UGC ${i + 1}` }));
-  const filledLandings = landingUrls
-    .filter((url): url is string => !!url)
-    .map((url, i) => ({ url, title: `Landing ${i + 1}` }));
 
   const availableTabs = tabs.filter((tab) =>
     (tab === "Vidéos Pub" && filledVideos.length > 0) ||
-    (tab === "Vidéos UGC" && filledUgc.length > 0) ||
-    (tab === "Landing Pages" && filledLandings.length > 0)
+    (tab === "Vidéos UGC" && filledUgc.length > 0)
   );
 
   const currentTab = availableTabs.includes(activeTab) ? activeTab : availableTabs[0];
@@ -222,13 +175,6 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
                 ))}
               </div>
             )}
-            {currentTab === "Landing Pages" && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {filledLandings.map((item, i) => (
-                  <LandingPageMockup key={i} imageUrl={item.url} title={item.title} index={i} onOpen={setLightbox} />
-                ))}
-              </div>
-            )}
           </motion.div>
         </div>
       </section>
@@ -256,44 +202,22 @@ export function Portfolio({ videoUrls = [], ugcUrls = [], landingUrls = [] }: Po
               className="relative flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
-              {lightbox.type === "video" ? (
-                /* ── Video player (phone shape) ── */
-                <div style={{
-                  width: "min(360px, 88vw)",
-                  borderRadius: 36,
-                  border: "3px solid #7c3aed",
-                  overflow: "hidden",
-                  boxShadow: "0 0 60px rgba(124,58,237,0.4)",
-                  background: "#000",
-                }}>
-                  <video
-                    src={lightbox.url}
-                    controls
-                    playsInline
-                    style={{ width: "100%", maxHeight: "78vh", objectFit: "contain", display: "block", background: "#000" }}
-                  />
-                </div>
-              ) : (
-                /* ── Landing page — scrollable full-height image ── */
-                <div style={{
-                  width: "min(500px, 92vw)",
-                  maxHeight: "86vh",
-                  overflowY: "auto",
-                  borderRadius: 20,
-                  border: "2px solid #7c3aed",
-                  boxShadow: "0 0 60px rgba(124,58,237,0.35)",
-                  background: "#fff",
-                  scrollbarWidth: "thin",
-                  scrollbarColor: "#7c3aed transparent",
-                }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={lightbox.url}
-                    alt={lightbox.label}
-                    style={{ width: "100%", height: "auto", display: "block" }}
-                  />
-                </div>
-              )}
+              {/* ── Video player (phone shape) ── */}
+              <div style={{
+                width: "min(360px, 88vw)",
+                borderRadius: 36,
+                border: "3px solid #7c3aed",
+                overflow: "hidden",
+                boxShadow: "0 0 60px rgba(124,58,237,0.4)",
+                background: "#000",
+              }}>
+                <video
+                  src={lightbox.url}
+                  controls
+                  playsInline
+                  style={{ width: "100%", maxHeight: "78vh", objectFit: "contain", display: "block", background: "#000" }}
+                />
+              </div>
 
               {/* Label */}
               <p className="mt-3 text-white/50 text-xs font-medium">{lightbox.label}</p>

@@ -55,20 +55,14 @@ export const DEFAULT_PRICING: PricingConfig = {
       msg: "Bonjour! Je suis intéressé(e) par vos Vidéos UGC.",
     },
     {
-      category: "Landing Page",
-      packages: [{ label: "1 page complète", price: 49 }],
-      features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
-      msg: "Bonjour! Je suis intéressé(e) par votre service Landing Page.",
-    },
-    {
-      category: "Filmage",
+      category: "Tournage",
       packages: [
         { label: "1 vidéo tournée", price: 350 },
         { label: "3 vidéos tournées", price: 900 },
         { label: "5 vidéos tournées", price: 1250 },
       ],
       features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
-      msg: "Bonjour! Je suis intéressé(e) par votre service Filmage.",
+      msg: "Bonjour! Je suis intéressé(e) par votre service Tournage.",
     },
   ],
 };

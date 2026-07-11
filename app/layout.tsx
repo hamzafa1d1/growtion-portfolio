@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://hamma-portfolio.vercel.app"),
   title: "Growtion — Des Créatives qui Transforment le Scroll en Achat",
   description:
-    "Growtion crée des vidéos publicitaires, vidéos UGC et landing pages qui convertissent. Plus de 200 clients satisfaits, 1000+ créations réalisées.",
-  keywords: ["vidéos publicitaires", "UGC", "landing page", "e-commerce", "ads", "Tunisie", "Growtion"],
+    "Growtion crée des vidéos publicitaires, vidéos UGC et vidéos de tournage qui convertissent. Plus de 200 clients satisfaits, 1000+ créations réalisées.",
+  keywords: ["vidéos publicitaires", "UGC", "tournage", "e-commerce", "ads", "Tunisie", "Growtion"],
   openGraph: {
     title: "Growtion — Sell Smart, Grow Faster",
     description: "Des créatives qui transforment le scroll en achat.",

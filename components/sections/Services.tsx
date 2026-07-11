@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Play, Zap, Layout, Clapperboard, Check, ArrowUpRight } from "lucide-react";
+import { Play, Zap, Clapperboard, Check, ArrowUpRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -22,16 +22,8 @@ const services = [
     gradientEnd: "#8b5cf6",
   },
   {
-    icon: <Layout className="w-8 h-8" />,
-    title: "Landing Pages",
-    description: "Des pages de vente optimisées qui guident le visiteur vers l'achat. Design persuasif, copywriting émotionnel.",
-    features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
-    accentColor: "#7c3aed",
-    gradientEnd: "#a855f7",
-  },
-  {
     icon: <Clapperboard className="w-8 h-8" />,
-    title: "Filmage",
+    title: "Tournage",
     description: "Tournage professionnel on-location ou en studio. Des productions de haute qualité qui donnent une image premium à votre marque.",
     features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
     accentColor: "#5b21b6",
@@ -77,7 +69,7 @@ export function Services() {
         </motion.div>
 
         <motion.div
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

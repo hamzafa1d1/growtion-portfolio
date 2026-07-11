@@ -27,7 +27,7 @@ export default async function Home() {
           cardMedia={[
             assets["portfolio-video"][0]?.url ?? null,
             assets["portfolio-ugc"][0]?.url ?? null,
-            assets["portfolio-landing"][0]?.url ?? null,
+            assets["filming-video"][0]?.url ?? null,
           ]}
         />
         <SectorsBand />
@@ -36,7 +36,6 @@ export default async function Home() {
         <Portfolio
           videoUrls={urls("portfolio-video")}
           ugcUrls={urls("portfolio-ugc")}
-          landingUrls={urls("portfolio-landing")}
         />
         <FilmingVideos videoUrls={urls("filming-video")} />
         <Testimonials reviewUrls={urls("testimonials-review")} />

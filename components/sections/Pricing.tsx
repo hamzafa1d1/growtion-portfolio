@@ -1,47 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
 import { Check, MessageCircle } from "lucide-react";
+import { DEFAULT_PRICING, type PricingConfig } from "@/lib/pricing";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const WHATSAPP_NUMBER = "21656614879";
-
-const plans = [
-  {
-    category: "Vidéos Publicitaires",
-    packages: [
-      { label: "1 vidéo + 1 hook gratuit", price: 79 },
-      { label: "3 vidéos + 3 hooks gratuits", price: 199 },
-      { label: "5 vidéos + 5 hooks gratuits", price: 299 },
-    ],
-    features: ["Script optimisé", "Hook accrocheur", "Montage pro", "Révisions incluses"],
-    msg: "Bonjour! Je suis intéressé(e) par vos Vidéos Publicitaires.",
-  },
-  {
-    category: "Vidéos UGC",
-    packages: [
-      { label: "1 vidéo UGC", price: 199 },
-      { label: "2 vidéos UGC", price: 350 },
-    ],
-    features: ["Créateur authentique", "Casting inclus", "Haute conversion", "Format Reels/TikTok"],
-    msg: "Bonjour! Je suis intéressé(e) par vos Vidéos UGC.",
-  },
-  {
-    category: "Landing Page",
-    packages: [{ label: "1 page complète", price: 49 }],
-    features: ["Design persuasif", "Copywriting inclus", "Mobile-first", "Livraison rapide"],
-    msg: "Bonjour! Je suis intéressé(e) par votre service Landing Page.",
-  },
-  {
-    category: "Filmage",
-    packages: [
-      { label: "1 vidéo tournée", price: 350 },
-      { label: "3 vidéos tournées", price: 900 },
-      { label: "5 vidéos tournées", price: 1250 },
-    ],
-    features: ["Tournage professionnel", "Éclairage & cadrage", "Direction créative", "Montage inclus"],
-    msg: "Bonjour! Je suis intéressé(e) par votre service Filmage.",
-  },
-];
 
 const containerVariants = {
   hidden: {},
@@ -53,7 +15,10 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.65, ease: EASE } },
 };
 
-export function Pricing() {
+export function Pricing({ config }: { config?: PricingConfig }) {
+  const { eyebrow, title, currencyLabel, currencyNote, whatsappNumber, plans } =
+    config ?? DEFAULT_PRICING;
+
   return (
     <section id="tarifs" className="section-purple py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -65,16 +30,16 @@ export function Pricing() {
           className="text-center mb-14"
         >
           <p className="text-purple-200 text-sm font-bold tracking-widest uppercase mb-3">
-            Transparent &amp; simple
+            {eyebrow}
           </p>
           <h2
             className="text-4xl md:text-5xl font-black text-white"
             style={{ fontFamily: "Arial Black, sans-serif" }}
           >
-            NOS TARIFS
+            {title}
           </h2>
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-white/40" />
-          <p className="text-purple-200 text-sm mt-3">Prix en DT (Dinar Tunisien)</p>
+          <p className="text-purple-200 text-sm mt-3">{currencyNote}</p>
         </motion.div>
 
         <motion.div
@@ -84,9 +49,9 @@ export function Pricing() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {plans.map((plan) => (
+          {plans.map((plan, planIdx) => (
             <motion.div
-              key={plan.category}
+              key={`${plan.category}-${planIdx}`}
               variants={itemVariants}
               whileHover={{
                 y: -10,
@@ -110,9 +75,9 @@ export function Pricing() {
 
               <div className="px-7 py-5 flex flex-col gap-3 flex-1">
                 {/* Package tiles */}
-                {plan.packages.map((pkg) => (
+                {plan.packages.map((pkg, pkgIdx) => (
                   <motion.div
-                    key={pkg.label}
+                    key={`${pkg.label}-${pkgIdx}`}
                     whileHover={{
                       scale: 1.03,
                       backgroundColor: "rgba(255,255,255,0.2)",
@@ -124,14 +89,14 @@ export function Pricing() {
                     <p className="text-sm leading-tight flex-1 text-white/90">{pkg.label}</p>
                     <div className="flex items-baseline gap-0.5 flex-shrink-0">
                       <span className="text-3xl font-black text-white">{pkg.price}</span>
-                      <span className="text-sm text-white/50">DT</span>
+                      <span className="text-sm text-white/50">{currencyLabel}</span>
                     </div>
                   </motion.div>
                 ))}
 
                 <ul className="flex flex-col gap-2 mt-2">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
+                  {plan.features.map((f, fIdx) => (
+                    <li key={`${f}-${fIdx}`} className="flex items-center gap-2 text-sm">
                       <Check className="w-4 h-4 flex-shrink-0 text-purple-300" />
                       <span className="text-white/80">{f}</span>
                     </li>
@@ -139,7 +104,7 @@ export function Pricing() {
                 </ul>
 
                 <motion.a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(plan.msg)}`}
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(plan.msg)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.04 }}

@@ -10,11 +10,12 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Pricing } from "@/components/sections/Pricing";
 import { CTA } from "@/components/sections/CTA";
 import { getAssets } from "@/lib/assets";
+import { getPricing } from "@/lib/pricing";
 
 export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function Home() {
-  const assets = await getAssets();
+  const [assets, pricing] = await Promise.all([getAssets(), getPricing()]);
 
   return (
     <>
@@ -32,7 +33,7 @@ export default async function Home() {
         />
         <FilmingVideos videoUrls={assets["filming-video"]} />
         <Testimonials reviewUrls={assets["testimonials-review"]} />
-        <Pricing />
+        <Pricing config={pricing} />
         <CTA />
       </main>
     </>

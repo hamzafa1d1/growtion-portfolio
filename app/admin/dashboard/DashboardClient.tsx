@@ -3,8 +3,10 @@ import { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { upload as uploadToBlob } from "@vercel/blob/client";
-import { Upload, Trash2, LogOut, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Upload, Trash2, LogOut, CheckCircle, AlertCircle, Loader2, ImageIcon, Tag } from "lucide-react";
 import type { AssetMap, AssetCategory } from "@/lib/assets";
+import type { PricingConfig } from "@/lib/pricing";
+import { PricingEditor } from "./PricingEditor";
 
 type SlotState = "idle" | "uploading" | "success" | "error";
 interface SlotStatus { state: SlotState; message?: string; }
@@ -35,8 +37,15 @@ const SECTIONS: {
   { category: "testimonials-review",label: "Avis Clients",          icon: "💬", count: 5, hint: "Screenshots des avis WhatsApp / Instagram (JPG, PNG)" },
 ];
 
-export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) {
+export function DashboardClient({
+  initialAssets,
+  initialPricing,
+}: {
+  initialAssets: AssetMap;
+  initialPricing: PricingConfig;
+}) {
   const router = useRouter();
+  const [tab, setTab] = useState<"assets" | "pricing">("assets");
   const [assets, setAssets] = useState<AssetMap>(initialAssets);
   const [slotStatus, setSlotStatus] = useState<Record<string, SlotStatus>>({});
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
@@ -151,7 +160,38 @@ export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) 
         </button>
       </header>
 
-      <div className="max-w-6xl mx-auto px-6 pt-10 flex flex-col gap-10">
+      {/* Tab bar */}
+      <div className="max-w-6xl mx-auto px-6 pt-8 w-full">
+        <div className="flex gap-2 p-1 rounded-2xl w-fit" style={{ background: "rgba(20,17,50,0.7)", border: "1px solid rgba(124,58,237,0.2)" }}>
+          {([
+            { id: "assets", label: "Assets", Icon: ImageIcon },
+            { id: "pricing", label: "Tarifs", Icon: Tag },
+          ] as const).map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              onClick={() => setTab(id)}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all"
+              style={
+                tab === id
+                  ? { background: "linear-gradient(135deg, #7C3AED, #9333EA)", color: "#fff" }
+                  : { background: "transparent", color: "#9ca3af" }
+              }
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {tab === "pricing" && (
+        <div className="max-w-6xl mx-auto px-6 pt-8 w-full">
+          <PricingEditor initialPricing={initialPricing} />
+        </div>
+      )}
+
+      {tab === "assets" && (
+      <div className="max-w-6xl mx-auto px-6 pt-8 flex flex-col gap-10">
         <div>
           <h1 className="text-3xl font-black text-white mb-1">Gestion des Assets</h1>
           <p className="text-gray-500 text-sm">
@@ -282,6 +322,7 @@ export function DashboardClient({ initialAssets }: { initialAssets: AssetMap }) 
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

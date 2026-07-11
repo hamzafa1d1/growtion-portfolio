@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { TrendingUp } from "lucide-react";
+import { isVideoAsset } from "@/lib/media";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -76,19 +77,29 @@ export function Results({ screenshotUrls = [] }: ResultsProps) {
                 aspectRatio: "4/3",
               }}
             >
-              <Image
-                src={url}
-                alt={`Résultat campagne ${i + 1}`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.08]"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
+              {isVideoAsset(url) ? (
+                <video
+                  src={`${url}#t=0.1`}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={url}
+                  alt={`Résultat campagne ${i + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.08]"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              )}
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
               {/* Bottom label */}
-              <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+              <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
                 <div className="flex items-center gap-2.5">
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"

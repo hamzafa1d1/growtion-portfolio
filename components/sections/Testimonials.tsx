@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { isVideoAsset } from "@/lib/media";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -72,13 +73,23 @@ export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
                 }}
               >
                 <div className="relative w-full" style={{ minHeight: 270 }}>
-                  <Image
-                    src={url}
-                    alt={`Avis client ${i + 1}`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                    sizes="300px"
-                  />
+                  {isVideoAsset(url) ? (
+                    <video
+                      src={`${url}#t=0.1`}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src={url}
+                      alt={`Avis client ${i + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                      sizes="300px"
+                    />
+                  )}
                 </div>
               </motion.div>
             ))}

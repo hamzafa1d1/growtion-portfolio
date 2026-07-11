@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback } from "react";
 import { Play, X, Maximize2 } from "lucide-react";
 import Image from "next/image";
+import { isVideoAsset } from "@/lib/media";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const tabs = ["Vidéos Pub", "Vidéos UGC"] as const;
@@ -15,9 +16,7 @@ export interface PortfolioProps {
 
 type Lightbox = { url: string; label: string; type: "video" | "image" };
 
-function isVideo(url: string) {
-  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
-}
+const isVideo = isVideoAsset;
 
 function PhoneMockup({
   imageUrl, label, index, onOpen,

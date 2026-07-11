@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
-import type { AssetCategory } from "@/lib/assets";
 
 // Must match lib/auth.ts SESSION_TOKEN
 const SESSION_TOKEN = "gw-sess-f3a9b2c1d7e4f6a0b8c2d5e1f9a3b7c4";
-const VIDEO_CATEGORIES: AssetCategory[] = ["portfolio-video", "portfolio-ugc", "filming-video"];
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = (await request.json()) as HandleUploadBody;
@@ -15,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       request,
 
       // Called when the client asks for an upload token (step 1)
-      onBeforeGenerateToken: async (_pathname, clientPayload) => {
+      onBeforeGenerateToken: async () => {
         // Auth: read session cookie from the incoming request
         const cookieHeader = request.headers.get("cookie") ?? "";
         const sessionCookie = cookieHeader
@@ -27,24 +25,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           throw new Error("Unauthorized");
         }
 
-        const { category } = JSON.parse(clientPayload ?? "{}") as { category: AssetCategory };
-        const isVideo = VIDEO_CATEGORIES.includes(category);
-
         return {
-          allowedContentTypes: isVideo
-            ? ["video/mp4", "video/webm", "video/quicktime"]
-            : ["image/jpeg", "image/png", "image/webp", "image/gif"],
-          maximumSizeInBytes: 200 * 1024 * 1024, // 200 MB — no serverless bottleneck
-          // Each upload is a distinct item in the category's collection. The
-          // client provides a unique pathname ("<category>-<uid>.<ext>") and we
-          // still add a random suffix, so uploads never collide and the CDN
-          // never serves a stale file. Nothing is cleaned up on upload —
-          // items are only removed via explicit delete.
+          // No content-type allowlist: any video format (or image) can be
+          // uploaded to any section. Only the authenticated admin reaches here,
+          // and a strict MIME list would otherwise reject valid but unusual
+          // video containers/codecs.
+          maximumSizeInBytes: 500 * 1024 * 1024, // 500 MB
+          // Each upload is a distinct item; unique pathname + random suffix so
+          // uploads never collide or overwrite. Removal is via explicit delete.
           addRandomSuffix: true,
         };
       },
 
-      // Direct-to-Blob upload has no server-side post-processing anymore.
+      // Direct-to-Blob upload has no server-side post-processing.
       onUploadCompleted: async () => {},
     });
 

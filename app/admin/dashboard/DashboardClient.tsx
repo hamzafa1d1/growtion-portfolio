@@ -3,24 +3,19 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { upload as uploadToBlob } from "@vercel/blob/client";
-import { Upload, Trash2, LogOut, AlertCircle, Loader2, Plus, Play, ImageIcon, Tag } from "lucide-react";
+import { Upload, Trash2, LogOut, AlertCircle, Loader2, Play, ImageIcon, Tag } from "lucide-react";
 import type { AssetMap, AssetCategory, AssetItem } from "@/lib/assets";
 import type { PricingConfig } from "@/lib/pricing";
+import { isVideoAsset } from "@/lib/media";
 import { PricingEditor } from "./PricingEditor";
 
 type AddState = "idle" | "uploading" | "error";
 interface AddStatus { state: AddState; message?: string; }
 
-function isVideo(url: string) {
-  return /\.(mp4|webm|mov)$/i.test(url.split("?")[0]);
-}
+const isVideo = isVideoAsset;
 
-function acceptForCategory(category: AssetCategory) {
-  if (category === "portfolio-video" || category === "portfolio-ugc" || category === "filming-video") {
-    return "video/mp4,video/webm,video/quicktime";
-  }
-  return "image/jpeg,image/png,image/webp,image/gif";
-}
+// Any video format or image, on any section.
+const ACCEPT_ANY_MEDIA = "video/*,image/*";
 
 /** Client-side unique id so every upload is its own item (never overwrites). */
 function uid() {
@@ -178,8 +173,6 @@ export function DashboardClient({
         {SECTIONS.map((section) => {
           const items = assets[section.category];
           const status = addStatus[section.category] ?? { state: "idle" };
-          const accept = acceptForCategory(section.category);
-          const isVideoCat = accept.startsWith("video");
 
           return (
             <div key={section.category} className="flex flex-col gap-4">
@@ -264,7 +257,7 @@ export function DashboardClient({
                     ) : (
                       <div className="flex flex-col items-center gap-2 group-hover:opacity-80 transition-opacity">
                         <div className="w-11 h-11 rounded-full flex items-center justify-center" style={{ background: "rgba(124,58,237,0.25)" }}>
-                          {isVideoCat ? <Upload className="w-6 h-6 text-purple-400" /> : <Plus className="w-6 h-6 text-purple-400" />}
+                          <Upload className="w-6 h-6 text-purple-400" />
                         </div>
                         <span className="text-gray-400 text-xs text-center px-2">Ajouter</span>
                       </div>
@@ -273,7 +266,7 @@ export function DashboardClient({
                   <input
                     ref={(el) => { fileInputRefs.current[section.category] = el; }}
                     type="file"
-                    accept={accept}
+                    accept={ACCEPT_ANY_MEDIA}
                     className="hidden"
                     onChange={(e) => {
                       const file = e.target.files?.[0];

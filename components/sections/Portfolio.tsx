@@ -123,6 +123,21 @@ export function Portfolio({ videoUrls = [], ugcUrls = [] }: PortfolioProps) {
     };
   }, [lightbox, closeLightbox]);
 
+  // Sync active tab from URL hash (e.g. hero cards linking to #portfolio-ugc)
+  useEffect(() => {
+    function syncFromHash() {
+      if (window.location.hash === "#portfolio-ugc") {
+        setActiveTab("Vidéos UGC");
+        document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (window.location.hash === "#portfolio") {
+        setActiveTab("Vidéos Pub");
+      }
+    }
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
   if (availableTabs.length === 0) return null;
 
   return (

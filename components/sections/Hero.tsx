@@ -129,7 +129,7 @@ export function Hero() {
                   boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
                 }}
               >
-                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                <a href="#portfolio" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
                   <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                     {services[0].icon}
                   </div>
@@ -164,7 +164,7 @@ export function Hero() {
                   boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
                 }}
               >
-                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                <a href="#portfolio-ugc" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                     {services[1].icon}
                   </div>
@@ -197,7 +197,7 @@ export function Hero() {
                   boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
                 }}
               >
-                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                <a href="#tournage" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
                     {services[2].icon}
                   </div>

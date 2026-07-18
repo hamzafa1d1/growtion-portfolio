@@ -122,22 +122,24 @@ export function Hero() {
                   boxShadow: "0 32px 70px rgba(109,40,217,0.55)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between -rotate-0 sm:-rotate-2"
+                className="relative overflow-hidden rounded-3xl -rotate-0 sm:-rotate-2 cursor-pointer"
                 style={{
                   background: "linear-gradient(160deg, #8b5cf6 0%, #6d28d9 100%)",
                   minHeight: 280,
                   boxShadow: "0 12px 32px rgba(109,40,217,0.28)",
                 }}
               >
-                <div className="relative z-10 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
-                  {services[0].icon}
-                </div>
-                <div className="relative z-10">
-                  <p className="text-purple-200 text-xs font-bold mb-1">{services[0].tag}</p>
-                  <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>
-                    {services[0].label}
-                  </p>
-                </div>
+                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                  <div className="w-11 h-11 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                    {services[0].icon}
+                  </div>
+                  <div>
+                    <p className="text-purple-200 text-xs font-bold mb-1">{services[0].tag}</p>
+                    <p className="text-white font-black text-xl leading-tight" style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}>
+                      {services[0].label}
+                    </p>
+                  </div>
+                </a>
               </motion.div>
             </motion.div>
 
@@ -155,20 +157,22 @@ export function Hero() {
                   boxShadow: "0 24px 55px rgba(109,40,217,0.45)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between rotate-0 sm:rotate-2"
+                className="relative overflow-hidden rounded-3xl rotate-0 sm:rotate-2 cursor-pointer"
                 style={{
                   background: "linear-gradient(160deg, #7c3aed 0%, #5b21b6 100%)",
                   minHeight: 132,
                   boxShadow: "0 8px 24px rgba(109,40,217,0.2)",
                 }}
               >
-                <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
-                  {services[1].icon}
-                </div>
-                <div className="relative z-10">
-                  <p className="text-purple-200 text-xs font-bold mb-0.5">{services[1].tag}</p>
-                  <p className="text-white font-black text-base leading-tight">{services[1].label}</p>
-                </div>
+                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                    {services[1].icon}
+                  </div>
+                  <div>
+                    <p className="text-purple-200 text-xs font-bold mb-0.5">{services[1].tag}</p>
+                    <p className="text-white font-black text-base leading-tight">{services[1].label}</p>
+                  </div>
+                </a>
               </motion.div>
             </motion.div>
 
@@ -186,20 +190,22 @@ export function Hero() {
                   boxShadow: "0 24px 55px rgba(168,85,246,0.45)",
                   transition: { type: "spring", stiffness: 280, damping: 18 },
                 }}
-                className="relative overflow-hidden rounded-3xl p-5 flex flex-col justify-between rotate-0 sm:rotate-1"
+                className="relative overflow-hidden rounded-3xl rotate-0 sm:rotate-1 cursor-pointer"
                 style={{
                   background: "linear-gradient(160deg, #a855f6 0%, #7c3aed 100%)",
                   minHeight: 132,
                   boxShadow: "0 8px 24px rgba(168,85,246,0.22)",
                 }}
               >
-                <div className="relative z-10 w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
-                  {services[2].icon}
-                </div>
-                <div className="relative z-10">
-                  <p className="text-purple-200 text-xs font-bold mb-0.5">{services[2].tag}</p>
-                  <p className="text-white font-black text-base leading-tight">{services[2].label}</p>
-                </div>
+                <a href="#services" className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.2)" }}>
+                    {services[2].icon}
+                  </div>
+                  <div>
+                    <p className="text-purple-200 text-xs font-bold mb-0.5">{services[2].tag}</p>
+                    <p className="text-white font-black text-base leading-tight">{services[2].label}</p>
+                  </div>
+                </a>
               </motion.div>
             </motion.div>
           </div>

@@ -43,7 +43,7 @@ export function Testimonials({ reviewUrls = [] }: TestimonialsProps) {
             className="text-4xl md:text-5xl font-black text-gray-900"
             style={{ fontFamily: "var(--font-display), 'Arial Black', Impact, sans-serif" }}
           >
-            AVIS <span className="gradient-text">CLIENTS</span>
+            <span className="gradient-text">RESULTS</span>
           </h2>
           <div className="mx-auto mt-4 h-1 w-16 rounded-full bg-purple-600" />
         </motion.div>

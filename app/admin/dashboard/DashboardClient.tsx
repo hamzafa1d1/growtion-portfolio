@@ -32,7 +32,7 @@ const SECTIONS: {
   { category: "portfolio-video",    label: "Vidéos Publicitaires",  icon: "📹", hint: "Fichiers vidéo MP4 de vos pubs (MP4 — jusqu'à 200 MB)" },
   { category: "portfolio-ugc",      label: "Vidéos UGC",            icon: "🎯", hint: "Fichiers vidéo MP4 UGC (MP4 — jusqu'à 200 MB)" },
   { category: "filming-video",      label: "Vidéos Tournage",       icon: "🎬", hint: "Vidéos de tournage / behind-the-scenes (MP4 — jusqu'à 200 MB)" },
-  { category: "testimonials-review",label: "Avis Clients",          icon: "💬", hint: "Screenshots des avis WhatsApp / Instagram (JPG, PNG)" },
+  { category: "testimonials-review",label: "Results",               icon: "💬", hint: "Screenshots des avis WhatsApp / Instagram (JPG, PNG)" },
 ];
 
 export function DashboardClient({

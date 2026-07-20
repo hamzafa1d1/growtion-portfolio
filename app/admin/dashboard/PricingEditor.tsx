@@ -193,13 +193,20 @@ export function PricingEditor({ initialPricing }: { initialPricing: PricingConfi
                     <input
                       type="number"
                       min={0}
-                      value={pkg.price}
-                      onChange={(e) =>
+                      inputMode="numeric"
+                      // Empty display for 0 so a newly added or cleared field
+                      // can be typed into directly instead of fighting a stuck "0".
+                      value={pkg.price === 0 ? "" : pkg.price}
+                      placeholder="0"
+                      onChange={(e) => {
+                        const parsed = Number(e.target.value);
+                        const price =
+                          e.target.value === "" || !Number.isFinite(parsed) ? 0 : Math.max(0, parsed);
                         updatePlan(pi, (p) => ({
                           ...p,
-                          packages: p.packages.map((x, j) => (j === ki ? { ...x, price: Number(e.target.value) || 0 } : x)),
-                        }))
-                      }
+                          packages: p.packages.map((x, j) => (j === ki ? { ...x, price } : x)),
+                        }));
+                      }}
                       className="px-3 py-2 rounded-lg text-white outline-none text-sm w-full"
                       style={inputStyle}
                     />
